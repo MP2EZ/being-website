@@ -1,9 +1,14 @@
-name = "websitev2"
-pages_build_output_dir = ".open-next"
+name = "being-website"
+main = ".open-next/worker.js"
 compatibility_date = "2025-11-17"
 compatibility_flags = ["nodejs_compat"]
 
-# Preview environment
-[env.preview]
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+# Production environment
+[env.production]
+name = "being-website"
 compatibility_date = "2025-11-17"
 compatibility_flags = ["nodejs_compat"]
