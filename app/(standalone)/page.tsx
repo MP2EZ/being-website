@@ -43,11 +43,11 @@ export default function ComingSoon() {
       <div className="w-full max-w-lg mx-auto text-center space-y-8">
         {/* Brand Icon */}
         <div className="flex justify-center">
-          <BrainIcon size={90} className="text-blue-950" />
+          <BrainIcon size={108} className="text-blue-950" />
         </div>
 
         {/* Headline */}
-        <div className="space-y-4">
+        <div className="space-y-6">
           <h1 className="
             text-4xl sm:text-5xl
             font-semibold text-blue-950
@@ -56,13 +56,21 @@ export default function ComingSoon() {
             Being. is launching soon
           </h1>
 
-          <p className="
-            text-lg sm:text-xl text-gray-600
-            leading-relaxed max-w-md mx-auto
-          ">
-            Ancient Stoic wisdom meets modern mental health practice.
-            Be the first to know when we launch.
-          </p>
+          <div className="space-y-4">
+            <p className="
+              text-lg sm:text-xl text-gray-600
+              leading-relaxed max-w-md mx-auto
+            ">
+              Ancient Stoic wisdom meets modern mental health practice.
+            </p>
+
+            <p className="
+              text-lg sm:text-xl text-gray-600
+              leading-relaxed max-w-md mx-auto
+            ">
+              Be the first to know when we launch.
+            </p>
+          </div>
         </div>
 
         {/* Email Capture Form */}
