@@ -43,7 +43,7 @@ export default function ComingSoon() {
       <div className="w-full max-w-lg mx-auto text-center space-y-8">
         {/* Brand Icon */}
         <div className="flex justify-center">
-          <BrainIcon size={108} className="text-blue-950" />
+          <BrainIcon size={140} className="text-blue-950" />
         </div>
 
         {/* Headline */}
@@ -59,7 +59,7 @@ export default function ComingSoon() {
           <div className="space-y-4">
             <p className="
               text-lg sm:text-xl text-gray-600
-              leading-relaxed max-w-md mx-auto
+              leading-relaxed max-w-2xl mx-auto
             ">
               Ancient Stoic wisdom meets modern mental health practice.
             </p>
