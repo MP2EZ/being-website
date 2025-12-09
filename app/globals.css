@@ -31,7 +31,7 @@
 
   /* === BRAND COLOR ALIASES === */
   /* For navigation/footer components - map to existing colors */
-  --brand-midnight: #171717;      /* Same as gray-900 */
+  --brand-midnight: #1B2951;      /* Midnight blue - primary brand color */
   --brand-off-white: #FAFAFA;     /* Same as gray-50 */
   --brand-blue-gray: #525252;     /* Same as gray-600 */
   --brand-sage: #4A9B8E;          /* Same as accent-500 */

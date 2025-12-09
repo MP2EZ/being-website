@@ -24,7 +24,7 @@ export default function Home() {
         <div className="max-w-3xl mx-auto text-center space-y-8">
           {/* Icon - subtle, professional */}
           <div className="flex justify-center">
-            <BrainIcon size={48} className="text-blue-950" />
+            <BrainIcon size={140} className="text-blue-950" />
           </div>
 
           {/* Headline - large, clear hierarchy */}
