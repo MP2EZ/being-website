@@ -7,7 +7,13 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
+import { redirect } from 'next/navigation';
 import BrainIcon from '@/components/shared/BrainIcon';
+
+// Redirect to full site when NEXT_PUBLIC_SHOW_FULL_SITE is enabled
+if (process.env.NEXT_PUBLIC_SHOW_FULL_SITE === 'true') {
+  redirect('/home');
+}
 
 export default function ComingSoon() {
   const [email, setEmail] = useState('');

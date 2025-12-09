@@ -12,3 +12,9 @@ binding = "ASSETS"
 name = "being-website"
 compatibility_date = "2025-11-17"
 compatibility_flags = ["nodejs_compat"]
+
+# Preview environment (full site)
+[env.preview]
+name = "being-website-preview"
+compatibility_date = "2025-11-17"
+compatibility_flags = ["nodejs_compat"]
