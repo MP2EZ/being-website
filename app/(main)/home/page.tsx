@@ -24,13 +24,13 @@ export default function Home() {
         <div className="max-w-3xl mx-auto text-center space-y-8">
           {/* Icon - subtle, professional */}
           <div className="flex justify-center">
-            <BrainIcon size={140} className="text-blue-950" />
+            <BrainIcon size={140} className="text-brand-midnight" />
           </div>
 
           {/* Headline - large, clear hierarchy */}
           <h1 className="
             text-6xl sm:text-7xl
-            font-semibold text-blue-950
+            font-semibold text-brand-midnight
             leading-tight tracking-tight
           ">
             Mindfulness with meaning

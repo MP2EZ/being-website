@@ -14,9 +14,9 @@ export default function FeaturesPage() {
       <section className="px-6 py-16 sm:py-24 bg-white flex items-center justify-center min-h-[500px] sm:min-h-[600px]">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <div className="flex justify-center">
-            <BrainIcon size={140} className="text-blue-950" />
+            <BrainIcon size={140} className="text-brand-midnight" />
           </div>
-          <h1 className="text-5xl sm:text-6xl font-semibold text-blue-950 leading-tight tracking-tight">
+          <h1 className="text-5xl sm:text-6xl font-semibold text-brand-midnight leading-tight tracking-tight">
             App Features
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">

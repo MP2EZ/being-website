@@ -23,7 +23,7 @@ export default function QRCodePlaceholder({ platform, className = '' }: QRCodePl
         style={{
           width: '300px',
           height: '300px',
-          border: '8px solid #1B2951', // brand-midnight
+          border: '8px solid var(--color-brand-midnight)'
         }}
       >
         {/* Placeholder grid pattern */}
