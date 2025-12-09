@@ -49,17 +49,18 @@ export default function ComingSoon() {
       <div className="w-full max-w-2xl mx-auto text-center space-y-8">
         {/* Brand Icon */}
         <div className="flex justify-center">
-          <BrainIcon size={140} className="text-blue-950" />
+          <BrainIcon size={140} className="text-brand-midnight" />
         </div>
 
         {/* Headline */}
         <div className="space-y-6">
-          <h1 className="
-            text-4xl sm:text-5xl
-            font-semibold text-blue-950
-            leading-tight tracking-tight
-          ">
-            Being. is launching soon
+          <h1 className="leading-tight tracking-tight">
+            <span className="block text-5xl sm:text-6xl font-bold text-brand-midnight mb-2">
+              Being.
+            </span>
+            <span className="block text-3xl sm:text-4xl font-light text-gray-500">
+              is launching soon
+            </span>
           </h1>
 
           <div className="space-y-4">
