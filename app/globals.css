@@ -124,11 +124,11 @@
   --spacing-32: var(--spacing-32);
 
   /* === BORDER RADIUS === */
-  --radius-sm: var(--radius-sm);
-  --radius-md: var(--radius-md);
-  --radius-lg: var(--radius-lg);
+  --radius-sm: var(--radius-small);
+  --radius-md: var(--radius-medium);
+  --radius-lg: var(--radius-large);
   --radius-xl: var(--radius-xl);
-  --radius-2xl: var(--radius-2xl);
+  --radius-2xl: var(--radius-xxl);
   --radius-full: var(--radius-full);
 
   /* === TRANSITIONS === */
