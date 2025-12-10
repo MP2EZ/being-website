@@ -16,7 +16,7 @@ Package: `@mp2ez/being-design-system` | CSS: `app/globals.css`
 
 ### Tokens
 Radius: `small/medium/large` NOT `sm/md/lg` → `--radius-small`\|`--radius-medium`\|`--radius-large`
-Spacing: numeric(`1-32`)\|named(`xs-xxxl`)
+Spacing: pixel-based keys (`--spacing-4`=4px, `--spacing-16`=16px, etc.)
 Inline styles: `var(--color-*)` NOT hex
 
 Reference: `globals.css` @theme block for available tokens

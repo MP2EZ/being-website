@@ -2,144 +2,59 @@
 @import "@mp2ez/being-design-system/css";
 
 /**
- * Being Website Design Tokens
- * Extends shared design system with Tailwind theme mappings
+ * Being Website - Tailwind Theme Extensions
+ * Design system tokens imported above; this file adds aliases and overrides
  */
 
 :root {
-  /* === LEGACY ALIASES === */
-  /* Map old variable names to design system for backward compatibility */
-  --gray-0: var(--color-gray-0);
-  --gray-50: var(--color-gray-50);
-  --gray-100: var(--color-gray-100);
-  --gray-200: var(--color-gray-200);
-  --gray-300: var(--color-gray-300);
-  --gray-400: var(--color-gray-400);
-  --gray-500: var(--color-gray-500);
-  --gray-600: var(--color-gray-600);
-  --gray-700: var(--color-gray-700);
-  --gray-800: var(--color-gray-800);
-  --gray-900: var(--color-gray-900);
-
-  --accent-50: var(--color-accent-50);
-  --accent-100: var(--color-accent-100);
-  --accent-500: var(--color-accent-500);
-  --accent-600: var(--color-accent-600);
-  --accent-700: var(--color-accent-700);
-
-  --brand-midnight: var(--color-brand-midnight);
-  --brand-off-white: var(--color-brand-offWhite);
-  --brand-blue-gray: var(--color-brand-blueGray);
-  --brand-sage: var(--color-brand-sage);
-
-  --success: var(--color-status-success);
-  --warning: var(--color-status-warning);
-  --error: var(--color-status-error);
-  --info: var(--color-status-info);
-
-  --crisis-bg: var(--color-crisis-background);
-  --crisis-text: var(--color-crisis-text);
-  --crisis-border: var(--color-crisis-border);
-
-  /* Background & Foreground */
+  /* Semantic tokens */
   --background: var(--color-gray-0);
   --foreground: var(--color-gray-900);
 }
 
 @theme inline {
-  /* === NEUTRALS === */
-  --color-gray-0: var(--color-gray-0);
-  --color-gray-50: var(--color-gray-50);
-  --color-gray-100: var(--color-gray-100);
-  --color-gray-200: var(--color-gray-200);
-  --color-gray-300: var(--color-gray-300);
-  --color-gray-400: var(--color-gray-400);
-  --color-gray-500: var(--color-gray-500);
-  --color-gray-600: var(--color-gray-600);
-  --color-gray-700: var(--color-gray-700);
-  --color-gray-800: var(--color-gray-800);
-  --color-gray-900: var(--color-gray-900);
+  /* === ALIASES === */
+  /* Map Tailwind conventions to design system naming */
 
-  /* === ACCENT (Sage) === */
-  --color-accent-50: var(--color-accent-50);
-  --color-accent-100: var(--color-accent-100);
-  --color-accent-500: var(--color-accent-500);
-  --color-accent-600: var(--color-accent-600);
-  --color-accent-700: var(--color-accent-700);
-
-  /* Backward compatibility: sage-* classes */
+  /* Sage → Accent (backward compat for existing code) */
   --color-sage-50: var(--color-accent-50);
   --color-sage-100: var(--color-accent-100);
   --color-sage-500: var(--color-accent-500);
   --color-sage-600: var(--color-accent-600);
   --color-sage-700: var(--color-accent-700);
 
-  /* Brand color aliases */
-  --color-brand-midnight: var(--color-brand-midnight);
-  --color-brand-off-white: var(--color-brand-offWhite);
-  --color-brand-blue-gray: var(--color-brand-blueGray);
-  --color-brand-sage: var(--color-brand-sage);
-
-  /* === FUNCTIONAL === */
+  /* Functional colors */
   --color-success: var(--color-status-success);
   --color-warning: var(--color-status-warning);
   --color-error: var(--color-status-error);
   --color-info: var(--color-status-info);
 
-  /* Crisis */
+  /* Crisis shorthand */
   --color-crisis-bg: var(--color-crisis-background);
-  --color-crisis-text: var(--color-crisis-text);
-  --color-crisis-border: var(--color-crisis-border);
 
-  /* Background & Foreground */
+  /* Semantic */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* === SHADOWS === */
-  --shadow-sm: var(--shadow-sm);
-  --shadow-md: var(--shadow-md);
-  --shadow-lg: var(--shadow-lg);
-  --shadow-xl: var(--shadow-xl);
-
-  /* === TYPOGRAPHY === */
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-
-  /* === SPACING (from design system) === */
-  --spacing-1: var(--spacing-1);
-  --spacing-2: var(--spacing-2);
-  --spacing-3: var(--spacing-3);
-  --spacing-4: var(--spacing-4);
-  --spacing-5: var(--spacing-5);
-  --spacing-6: var(--spacing-6);
-  --spacing-7: var(--spacing-7);
-  --spacing-8: var(--spacing-8);
-  --spacing-10: var(--spacing-10);
-  --spacing-12: var(--spacing-12);
-  --spacing-14: var(--spacing-14);
-  --spacing-16: var(--spacing-16);
-  --spacing-18: var(--spacing-18);
-  --spacing-20: var(--spacing-20);
-  --spacing-24: var(--spacing-24);
-  --spacing-28: var(--spacing-28);
-  --spacing-32: var(--spacing-32);
-
-  /* === BORDER RADIUS === */
+  /* Radius: Tailwind sm/md/lg → design system small/medium/large */
   --radius-sm: var(--radius-small);
   --radius-md: var(--radius-medium);
   --radius-lg: var(--radius-large);
-  --radius-xl: var(--radius-xl);
   --radius-2xl: var(--radius-xxl);
-  --radius-full: var(--radius-full);
 
-  /* === TRANSITIONS === */
+  /* Duration: Tailwind numeric → design system named */
   --duration-75: var(--duration-fast);
   --duration-150: var(--duration-normal);
   --duration-200: var(--duration-slow);
   --duration-300: var(--duration-slower);
 
+  /* Easing */
   --ease-out: var(--ease-easeOut);
   --ease-in: var(--ease-easeIn);
   --ease-in-out: var(--ease-easeInOut);
+
+  /* Typography */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 /* === BASE STYLES === */
@@ -153,10 +68,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Tailwind's Preflight handles resets - no need for custom universal reset */
-
 /* === ACCESSIBILITY === */
-/* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -168,25 +80,14 @@ body {
 }
 
 /* === ANIMATIONS === */
-/* Minimal, professional - no excessive motion */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {
