@@ -127,15 +127,15 @@ export default function FeaturesPage() {
         </div>
       </section>
 
-      {/* Clinical Assessments */}
+      {/* Mental Health Self-Monitoring */}
       <section className="px-6 py-20 sm:py-24 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-4xl sm:text-5xl font-semibold text-gray-900">
-              Clinical Mental Health Tracking
+              Mental Health Self-Monitoring
             </h2>
             <p className="mt-6 text-lg text-gray-600 leading-relaxed">
-              Evidence-based assessments help you monitor your mental health over time.
+              Standardized self-assessments help you track your mental health patterns over time.
               All data encrypted and stored locally on your device.
             </p>
           </div>
@@ -145,8 +145,8 @@ export default function FeaturesPage() {
             <div className="bg-gray-50 p-12 rounded-xl shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">PHQ-9 (Depression)</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
-                The Patient Health Questionnaire-9 is a clinically validated tool for measuring
-                depression severity. Being uses exact PHQ-9 wording and scoring.
+                The Patient Health Questionnaire-9 is a widely-used self-assessment questionnaire
+                for monitoring depression symptoms. Being uses exact PHQ-9 wording and scoring.
               </p>
               <ul className="space-y-4 text-sm text-gray-700">
                 <li className="flex items-start">
@@ -172,8 +172,8 @@ export default function FeaturesPage() {
             <div className="bg-gray-50 p-12 rounded-xl shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">GAD-7 (Anxiety)</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
-                The Generalized Anxiety Disorder-7 scale measures anxiety symptoms. Clinical-grade
-                assessment with precise scoring.
+                The Generalized Anxiety Disorder-7 scale helps you monitor anxiety symptoms over time.
+                Self-assessment tool with standardized scoring.
               </p>
               <ul className="space-y-4 text-sm text-gray-700">
                 <li className="flex items-start">
@@ -290,7 +290,7 @@ export default function FeaturesPage() {
             Ready to begin?
           </h2>
           <p className="mt-6 text-lg text-gray-600 leading-relaxed">
-            Experience Stoic Mindfulness with clinical-grade mental health tracking.
+            Experience Stoic Mindfulness with evidence-based self-monitoring tools.
             Start your 28-day free trial today.
           </p>
           <div className="mt-8">
