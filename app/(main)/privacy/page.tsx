@@ -266,10 +266,6 @@ export default function PrivacyPage() {
               </li>
               <li className="flex items-start">
                 <span className="text-brand-sage mr-2">•</span>
-                <span><strong>Service Providers:</strong> Cloud infrastructure (AWS/Google Cloud), crash reporting (anonymized), payment processing (no health data shared)</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-brand-sage mr-2">•</span>
                 <span><strong>Legal Requirements:</strong> When required by law, court order, or to protect rights and safety</span>
               </li>
               <li className="flex items-start">
@@ -277,6 +273,31 @@ export default function PrivacyPage() {
                 <span><strong>Business Transfers:</strong> In the event of merger/acquisition (your privacy rights remain protected)</span>
               </li>
             </ul>
+
+            <h3 className="text-xl font-semibold text-brand-midnight mt-6 mb-3">
+              5.1 Service Providers
+            </h3>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              We use the following third-party service providers to operate our Services:
+            </p>
+            <ul className="space-y-3 text-gray-700 mb-4">
+              <li className="flex items-start">
+                <span className="text-brand-sage mr-2">•</span>
+                <span><strong><a href="https://supabase.com/privacy" className="text-brand-sage hover:underline">Supabase</a>:</strong> Database, authentication, and cloud storage (SOC 2 Type II certified, US data region). If you enable optional cloud backup, your encrypted data is stored on Supabase infrastructure.</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-brand-sage mr-2">•</span>
+                <span><strong>Expo:</strong> Mobile app framework and over-the-air updates (anonymized crash reports only)</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-brand-sage mr-2">•</span>
+                <span><strong>Apple/Google:</strong> App distribution and in-app purchases (no health data shared)</span>
+              </li>
+            </ul>
+            <p className="text-gray-700 text-sm">
+              All service providers are contractually bound to protect your data and may only use it to provide services to us.
+            </p>
+
             <div className="mt-6 p-4 bg-red-50 rounded border-l-4 border-red-400">
               <p className="text-sm text-gray-700">
                 <strong>No Advertising Partners:</strong> We do not share data with advertising
