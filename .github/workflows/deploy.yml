@@ -16,6 +16,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Checkout legal content from being repo
+        uses: actions/checkout@v4
+        with:
+          repository: mp2ez/being
+          token: ${{ secrets.GH_PACKAGES_TOKEN }}
+          path: .tmp-being
+          sparse-checkout: |
+            docs/legal/public
+          sparse-checkout-cone-mode: false
+
+      - name: Copy legal files to content directory
+        run: |
+          mkdir -p content/legal
+          cp -r .tmp-being/docs/legal/public/* content/legal/
+          rm -rf .tmp-being
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
