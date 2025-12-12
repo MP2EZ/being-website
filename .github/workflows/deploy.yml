@@ -20,6 +20,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: mp2ez/being
+          ref: development
           token: ${{ secrets.GH_PACKAGES_TOKEN }}
           path: .tmp-being
           sparse-checkout: |
