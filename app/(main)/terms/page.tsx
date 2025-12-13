@@ -1,5 +1,5 @@
-import { getLegalDoc } from '@/lib/legal';
 import { LegalPage } from '@/components/legal/LegalPage';
+import content from '@/content/legal/terms-of-service.md';
 
 export const dynamic = 'force-static';
 
@@ -9,7 +9,5 @@ export const metadata = {
 };
 
 export default function TermsOfServicePage() {
-  const content = getLegalDoc('terms-of-service');
-
   return <LegalPage content={content} />;
 }

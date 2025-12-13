@@ -1,5 +1,5 @@
-import { getLegalDoc } from '@/lib/legal';
 import { LegalPage } from '@/components/legal/LegalPage';
+import content from '@/content/legal/privacy-policy.md';
 
 export const dynamic = 'force-static';
 
@@ -9,7 +9,5 @@ export const metadata = {
 };
 
 export default function PrivacyPolicyPage() {
-  const content = getLegalDoc('privacy-policy');
-
   return <LegalPage content={content} />;
 }

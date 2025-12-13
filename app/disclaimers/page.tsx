@@ -1,5 +1,5 @@
-import { getLegalDoc } from '@/lib/legal';
 import { LegalPage } from '@/components/legal/LegalPage';
+import content from '@/content/legal/medical-disclaimer.md';
 
 export const dynamic = 'force-static';
 
@@ -9,7 +9,5 @@ export const metadata = {
 };
 
 export default function DisclaimersPage() {
-  const content = getLegalDoc('medical-disclaimer');
-
   return <LegalPage content={content} />;
 }
