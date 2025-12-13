@@ -1,6 +1,8 @@
 import { getLegalDoc } from '@/lib/legal';
 import { LegalPage } from '@/components/legal/LegalPage';
 
+export const dynamic = 'force-static';
+
 export const metadata = {
   title: 'Privacy Policy | Being',
   description: 'Learn how Being protects your privacy and handles your personal information.',

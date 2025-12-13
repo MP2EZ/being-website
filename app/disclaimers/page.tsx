@@ -1,6 +1,8 @@
 import { getLegalDoc } from '@/lib/legal';
 import { LegalPage } from '@/components/legal/LegalPage';
 
+export const dynamic = 'force-static';
+
 export const metadata = {
   title: 'Medical Disclaimer | Being',
   description: 'Important medical and wellness disclaimers for the Being app.',
