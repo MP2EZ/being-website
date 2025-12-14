@@ -24,13 +24,13 @@ jobs:
           token: ${{ secrets.GH_PACKAGES_TOKEN }}
           path: .tmp-being
           sparse-checkout: |
-            docs/legal/public
+            docs/legal
           sparse-checkout-cone-mode: false
 
       - name: Copy legal files to content directory
         run: |
           mkdir -p content/legal
-          cp -r .tmp-being/docs/legal/public/* content/legal/
+          cp -r .tmp-being/docs/legal/* content/legal/
           rm -rf .tmp-being
 
       - name: Setup Node.js
