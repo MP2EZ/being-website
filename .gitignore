@@ -52,5 +52,8 @@ Thumbs.db
 .wrangler/
 wrangler.state
 
+# Legal content (symlinked locally, copied in CI)
+content/legal
+
 # Build logs
 *.tsbuildinfo

@@ -1,9 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Fix workspace root detection issue
   turbopack: {
+    // Fix workspace root detection issue
     root: process.cwd(),
+    // Enable raw imports for markdown files
+    rules: {
+      '*.md': {
+        loaders: ['raw-loader'],
+        as: '*.js',
+      },
+    },
   },
 };
 
