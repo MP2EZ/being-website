@@ -4,7 +4,7 @@
 
 **Format**: `[Work Item ID] - [Additional context]`
 
-**Database ID**: 277a1108c20880bda80dce2ec7d8a12e
+**Database ID**: `${NOTION_WORK_DB}` (defined in `.claude/CLAUDE.md`)
 
 ---
 
@@ -41,7 +41,7 @@ Query the Notion database to find the page with matching Work Item ID:
 
 ```
 mcp__notionApi__API-post-database-query
-database_id: "277a1108c20880bda80dce2ec7d8a12e"
+database_id: "${NOTION_WORK_DB}"
 filter: {
   "property": "Work Item ID",
   "title": {
@@ -144,7 +144,7 @@ Example: `wi-123` or just the number portion
 **Check if worktree or branch already exists:**
 
 ```bash
-cd /Users/max/Development/active/being
+cd /Users/max/dev/being-website
 git worktree list | grep "[branch-name]"
 ```
 
@@ -152,7 +152,7 @@ git worktree list | grep "[branch-name]"
 
 **A) Worktree exists for this branch:**
 ```
-/Users/max/Development/active/being/feat-42  abc123 [feat/FEAT-42-easy-navigation-home]
+/Users/max/dev/being-website/feat-42  abc123 [feat/FEAT-42-easy-navigation-home]
 ```
 → Skip to Step 2.4 (cd into existing worktree)
 → Display: `ℹ️  Using existing worktree: feat-42`
@@ -176,13 +176,13 @@ git branch --list "[branch-name]"
 
 **If branch exists** (Scenario B):
 ```bash
-cd /Users/max/Development/active/being
+cd /Users/max/dev/being-website
 git worktree add [dir-name] [branch-name]
 ```
 
 **If branch doesn't exist** (Scenario C):
 ```bash
-cd /Users/max/Development/active/being
+cd /Users/max/dev/being-website
 git worktree add [dir-name] -b [branch-name] development
 ```
 
@@ -207,7 +207,7 @@ git worktree add wi-123 feat/WI-123-add-crisis-detection
 **Check if .claude symlink exists:**
 
 ```bash
-cd /Users/max/Development/active/being
+cd /Users/max/dev/being-website
 ls -la [dir-name]/.claude
 ```
 
@@ -217,14 +217,14 @@ ls -la [dir-name]/.claude
 
 **If symlink missing or broken:**
 ```bash
-cd /Users/max/Development/active/being
+cd /Users/max/dev/being-website
 rm -f [dir-name]/.claude  # Remove if broken
-ln -s /Users/max/Development/active/being/.claude [dir-name]/.claude
+ln -s /Users/max/dev/being-website/.claude [dir-name]/.claude
 ```
 
 Example:
 ```bash
-ln -s /Users/max/Development/active/being/.claude wi-123/.claude
+ln -s /Users/max/dev/being-website/.claude wi-123/.claude
 ```
 
 **Verify symlink:**
@@ -240,12 +240,12 @@ Should show symlink pointing to correct location.
 **Change working directory to new worktree:**
 
 ```bash
-cd /Users/max/Development/active/being/[dir-name]
+cd /Users/max/dev/being-website/[dir-name]
 ```
 
 Example:
 ```bash
-cd /Users/max/Development/active/being/wi-123
+cd /Users/max/dev/being-website/wi-123
 ```
 
 **Verify location:**
@@ -254,7 +254,7 @@ pwd && git branch --show-current
 ```
 
 Should show:
-- Working directory: `/Users/max/Development/active/being/[dir-name]`
+- Working directory: `/Users/max/dev/being-website/[dir-name]`
 - Current branch: `[branch-name]`
 
 ---
@@ -264,7 +264,7 @@ Should show:
 **Check if dependencies are needed:**
 
 ```bash
-cd /Users/max/Development/active/being/[dir-name]
+cd /Users/max/dev/being-website/[dir-name]
 
 # Check if app/node_modules exists
 if [ -d "app/node_modules" ]; then
@@ -470,7 +470,7 @@ Read ./.claude/templates/being-templates.md → "B-DEBUG: Being Debugging"
 Execute exactly as documented.
 ```
 
-**Note**: `./.claude/` is the symlink in the worktree pointing to `/Users/max/Development/active/being/.claude/`
+**Note**: `./.claude/` is the symlink in the worktree pointing to `/Users/max/dev/being-website/.claude/`
 
 ---
 
@@ -480,7 +480,7 @@ Execute exactly as documented.
 
 ```
 mcp__git__git_status
-repo_path: "/Users/max/Development/active/being/.git"
+repo_path: "/Users/max/dev/being-website/.git"
 ```
 
 Display summary of changed files for user awareness.
@@ -491,7 +491,7 @@ Display summary of changed files for user awareness.
 
 ```
 mcp__git__git_add
-repo_path: "/Users/max/Development/active/being/.git"
+repo_path: "/Users/max/dev/being-website/.git"
 files: ["."]
 ```
 
@@ -518,7 +518,7 @@ files: ["."]
 
 ```
 mcp__git__git_commit
-repo_path: "/Users/max/Development/active/being/.git"
+repo_path: "/Users/max/dev/being-website/.git"
 message: "[type]: [work-item-id] [brief description]
 
 [Optional detailed explanation if needed]
@@ -668,7 +668,7 @@ The worktree structure allows:
 
 All git MCP calls use:
 ```
-repo_path: "/Users/max/Development/active/being/.git"
+repo_path: "/Users/max/dev/being-website/.git"
 ```
 
 This points to the bare repository, which manages all worktrees.
