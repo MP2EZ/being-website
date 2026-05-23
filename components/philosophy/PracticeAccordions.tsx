@@ -31,7 +31,7 @@ export default function PracticeAccordions() {
             onClick={() => toggleSection('virtues')}
             aria-expanded={expandedSection === 'virtues'}
             aria-controls="practice-virtues"
-            className="w-full flex items-center justify-between p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors text-left border-2 border-gray-200"
+            className="w-full flex items-center justify-between p-6 bg-gray-50 rounded-large hover:bg-gray-100 transition-colors text-left border-2 border-gray-200"
           >
             <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -47,7 +47,7 @@ export default function PracticeAccordions() {
           </button>
 
           {expandedSection === 'virtues' && (
-            <div id="practice-virtues" className="mt-4 p-8 bg-white border-2 border-gray-200 rounded-xl">
+            <div id="practice-virtues" className="mt-4 p-8 bg-white border-2 border-gray-200 rounded-large">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Wisdom */}
                 <div>
@@ -115,7 +115,7 @@ export default function PracticeAccordions() {
             onClick={() => toggleSection('entry')}
             aria-expanded={expandedSection === 'entry'}
             aria-controls="practice-entry"
-            className="w-full flex items-center justify-between p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors text-left border-2 border-gray-200"
+            className="w-full flex items-center justify-between p-6 bg-gray-50 rounded-large hover:bg-gray-100 transition-colors text-left border-2 border-gray-200"
           >
             <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -131,7 +131,7 @@ export default function PracticeAccordions() {
           </button>
 
           {expandedSection === 'entry' && (
-            <div id="practice-entry" className="mt-4 p-8 bg-white border-2 border-gray-200 rounded-xl space-y-6">
+            <div id="practice-entry" className="mt-4 p-8 bg-white border-2 border-gray-200 rounded-large space-y-6">
               <div>
                 <h4 className="font-semibold text-gray-900 mb-3">Morning &amp; Evening Check-ins</h4>
                 <p className="text-gray-600 leading-relaxed">
@@ -165,7 +165,7 @@ export default function PracticeAccordions() {
             onClick={() => toggleSection('intermediate')}
             aria-expanded={expandedSection === 'intermediate'}
             aria-controls="practice-intermediate"
-            className="w-full flex items-center justify-between p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors text-left border-2 border-gray-200"
+            className="w-full flex items-center justify-between p-6 bg-gray-50 rounded-large hover:bg-gray-100 transition-colors text-left border-2 border-gray-200"
           >
             <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -181,7 +181,7 @@ export default function PracticeAccordions() {
           </button>
 
           {expandedSection === 'intermediate' && (
-            <div id="practice-intermediate" className="mt-4 p-8 bg-white border-2 border-gray-200 rounded-xl space-y-6">
+            <div id="practice-intermediate" className="mt-4 p-8 bg-white border-2 border-gray-200 rounded-large space-y-6">
               <div>
                 <h4 className="font-semibold text-gray-900 mb-3">Premeditatio Malorum (Negative Visualization)</h4>
                 <p className="text-gray-600 leading-relaxed">
@@ -216,7 +216,7 @@ export default function PracticeAccordions() {
             onClick={() => toggleSection('advanced')}
             aria-expanded={expandedSection === 'advanced'}
             aria-controls="practice-advanced"
-            className="w-full flex items-center justify-between p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors text-left border-2 border-gray-200"
+            className="w-full flex items-center justify-between p-6 bg-gray-50 rounded-large hover:bg-gray-100 transition-colors text-left border-2 border-gray-200"
           >
             <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -232,7 +232,7 @@ export default function PracticeAccordions() {
           </button>
 
           {expandedSection === 'advanced' && (
-            <div id="practice-advanced" className="mt-4 p-8 bg-white border-2 border-gray-200 rounded-xl space-y-6">
+            <div id="practice-advanced" className="mt-4 p-8 bg-white border-2 border-gray-200 rounded-large space-y-6">
               <div>
                 <h4 className="font-semibold text-gray-900 mb-3">Amor Fati (Love of Fate)</h4>
                 <p className="text-gray-600 leading-relaxed">

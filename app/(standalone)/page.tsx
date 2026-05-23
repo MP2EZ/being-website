@@ -77,7 +77,7 @@ export default function ComingSoon() {
         {/* Email Capture Form */}
         {status === 'success' ? (
           <div className="
-            rounded-xl border-2 border-accent-500 bg-accent-50
+            rounded-large border-2 border-accent-500 bg-accent-50
             px-6 py-8 space-y-2
           ">
             <p className="text-lg font-semibold text-accent-700">
@@ -103,7 +103,7 @@ export default function ComingSoon() {
                 disabled={status === 'submitting'}
                 className="
                   flex-1 px-4 py-3
-                  rounded-lg border-2 border-gray-300
+                  rounded-large border-2 border-gray-300
                   text-base text-gray-900 placeholder:text-gray-400
                   focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500
                   disabled:opacity-50 disabled:cursor-not-allowed
@@ -117,7 +117,7 @@ export default function ComingSoon() {
                 className="
                   px-6 py-3
                   bg-accent-600 text-white font-medium
-                  rounded-lg min-h-[48px]
+                  rounded-large min-h-[48px]
                   hover:bg-accent-700 active:bg-accent-700
                   focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500
                   disabled:opacity-50 disabled:cursor-not-allowed

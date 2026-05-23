@@ -41,7 +41,7 @@ export default function FeaturesPage() {
 
           <div className="mt-20 sm:mt-24 grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20">
             {/* Morning */}
-            <div className="bg-white p-12 rounded-xl shadow-sm">
+            <div className="bg-white p-12 rounded-large shadow-sm">
               <div className="text-3xl opacity-60 mb-6">🌅</div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Morning</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
@@ -69,7 +69,7 @@ export default function FeaturesPage() {
             </div>
 
             {/* Midday */}
-            <div className="bg-white p-12 rounded-xl shadow-sm">
+            <div className="bg-white p-12 rounded-large shadow-sm">
               <div className="text-3xl opacity-60 mb-6">☀️</div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Midday</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
@@ -97,7 +97,7 @@ export default function FeaturesPage() {
             </div>
 
             {/* Evening */}
-            <div className="bg-white p-12 rounded-xl shadow-sm">
+            <div className="bg-white p-12 rounded-large shadow-sm">
               <div className="text-3xl opacity-60 mb-6">🌙</div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Evening</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
@@ -142,7 +142,7 @@ export default function FeaturesPage() {
 
           <div className="mt-20 sm:mt-24 grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
             {/* PHQ-9 */}
-            <div className="bg-gray-50 p-12 rounded-xl shadow-sm">
+            <div className="bg-gray-50 p-12 rounded-large shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">PHQ-9 (Depression)</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
                 The Patient Health Questionnaire-9 is a widely-used self-assessment questionnaire
@@ -169,7 +169,7 @@ export default function FeaturesPage() {
             </div>
 
             {/* GAD-7 */}
-            <div className="bg-gray-50 p-12 rounded-xl shadow-sm">
+            <div className="bg-gray-50 p-12 rounded-large shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">GAD-7 (Anxiety)</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
                 The Generalized Anxiety Disorder-7 scale helps you monitor anxiety symptoms over time.
@@ -210,7 +210,7 @@ export default function FeaturesPage() {
             </p>
           </div>
 
-          <div className="mt-12 bg-info text-white p-10 rounded-xl">
+          <div className="mt-12 bg-info text-white p-10 rounded-large">
             <h3 className="text-2xl font-semibold mb-4">988 Suicide & Crisis Lifeline</h3>
             <p className="text-lg leading-relaxed mb-6 text-blue-100">
               One tap to connect with trained crisis counselors. Available 24/7/365.

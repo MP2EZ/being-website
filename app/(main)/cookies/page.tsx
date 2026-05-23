@@ -18,7 +18,7 @@ export default function CookiesPage() {
 
         <div className="prose prose-lg max-w-none">
           {/* The Good News */}
-          <section className="bg-green-50 p-8 rounded-lg border-2 border-green-400 mb-8">
+          <section className="bg-green-50 p-8 rounded-large border-2 border-green-400 mb-8">
             <h2 className="text-2xl font-bold text-green-900 mb-4">
               Good News: We Don't Use Cookies
             </h2>
@@ -33,7 +33,7 @@ export default function CookiesPage() {
           </section>
 
           {/* What Are Cookies? */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               What Are Cookies?
             </h2>
@@ -65,7 +65,7 @@ export default function CookiesPage() {
           </section>
 
           {/* What We Don't Use */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               What We Don't Use
             </h2>
@@ -94,7 +94,7 @@ export default function CookiesPage() {
           </section>
 
           {/* Mobile App */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Mobile App Data Storage
             </h2>
@@ -126,7 +126,7 @@ export default function CookiesPage() {
           </section>
 
           {/* Server Logs */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Server Logs (Minimal Data Collection)
             </h2>
@@ -158,7 +158,7 @@ export default function CookiesPage() {
           </section>
 
           {/* Your Choices */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Your Choices
             </h2>
@@ -179,7 +179,7 @@ export default function CookiesPage() {
           </section>
 
           {/* Changes to This Policy */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Changes to This Policy
             </h2>
@@ -191,7 +191,7 @@ export default function CookiesPage() {
           </section>
 
           {/* Contact */}
-          <section className="bg-gray-50 p-6 rounded-lg">
+          <section className="bg-gray-50 p-6 rounded-large">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Questions?
             </h3>

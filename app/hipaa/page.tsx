@@ -19,7 +19,7 @@ export default function HIPAAPage() {
 
         <div className="prose prose-lg max-w-none">
           {/* Important Distinction */}
-          <section className="bg-warning-bg p-8 rounded-lg border-2 border-warning mb-8">
+          <section className="bg-warning-bg p-8 rounded-large border-2 border-warning mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Important: Being is NOT a HIPAA Covered Entity
             </h2>
@@ -41,7 +41,7 @@ export default function HIPAAPage() {
           </section>
 
           {/* Our Commitment */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-brand-midnight mb-4">
               Our Voluntary Commitment to HIPAA-Level Privacy
             </h2>
@@ -122,7 +122,7 @@ export default function HIPAAPage() {
           </section>
 
           {/* Your Protected Health Information */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-brand-midnight mb-4">
               What Information We Protect
             </h2>
@@ -155,7 +155,7 @@ export default function HIPAAPage() {
           </section>
 
           {/* When We May Disclose Information */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-brand-midnight mb-4">
               When We May Disclose Your Information
             </h2>
@@ -188,7 +188,7 @@ export default function HIPAAPage() {
           </section>
 
           {/* Your Rights */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-brand-midnight mb-4">
               Your Privacy Rights
             </h2>
@@ -228,7 +228,7 @@ export default function HIPAAPage() {
           </section>
 
           {/* Breach Notification */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-brand-midnight mb-4">
               Breach Notification
             </h2>
@@ -259,7 +259,7 @@ export default function HIPAAPage() {
           </section>
 
           {/* Contact */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-brand-midnight mb-4">
               Questions or Concerns?
             </h2>
@@ -280,7 +280,7 @@ export default function HIPAAPage() {
           </section>
 
           {/* Effective Date */}
-          <section className="bg-gray-100 p-6 rounded-lg">
+          <section className="bg-gray-100 p-6 rounded-large">
             <p className="text-sm text-gray-700">
               <strong>Effective Date:</strong> [TO BE DETERMINED]<br />
               <strong>Last Reviewed:</strong> [TO BE DETERMINED]
@@ -289,7 +289,7 @@ export default function HIPAAPage() {
         </div>
 
         {/* Attorney Review Notice */}
-        <div className="mt-12 p-6 bg-warning-bg border-2 border-warning rounded-lg">
+        <div className="mt-12 p-6 bg-warning-bg border-2 border-warning rounded-large">
           <p className="text-sm text-gray-800">
             <strong>⚠️ DRAFT DOCUMENT:</strong> This HIPAA Notice requires attorney review before
             publication. Note: Being is NOT legally subject to HIPAA (we're a wellness app, not a
