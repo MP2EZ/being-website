@@ -86,7 +86,7 @@ describe('POST /api/waitlist', () => {
     expect(await res.json()).toEqual({ success: true });
     expect(fetchSpy).toHaveBeenCalledOnce();
 
-    const [url, init] = fetchSpy.mock.calls[0];
+    const [url, init] = fetchSpy.mock.calls[0]!;
     expect(url).toBe('https://api.notion.com/v1/pages');
     const sent = JSON.parse((init as RequestInit).body as string);
     expect(sent.properties.Email.title[0].text.content).toBe('a@b.com');
@@ -108,7 +108,7 @@ describe('POST /api/waitlist', () => {
 
     expect(res.status).toBe(200);
     const sent = JSON.parse(
-      (fetchSpy.mock.calls[0][1] as RequestInit).body as string,
+      (fetchSpy.mock.calls[0]![1] as RequestInit).body as string,
     );
     expect(sent.properties.Variant).toEqual({ select: { name: 'A' } });
     expect(ab.trackConversion).toHaveBeenCalledWith('A', 'waitlist_signup');

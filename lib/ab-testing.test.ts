@@ -10,11 +10,10 @@ const RANDOM_DENOMINATOR = 0xffffffff + 1;
 function stubRandom(quantile: number) {
   return vi
     .spyOn(crypto, 'getRandomValues')
-    .mockImplementation((arr: ArrayBufferView | null) => {
-      const u32 = arr as Uint32Array;
-      u32[0] = Math.floor(quantile * RANDOM_DENOMINATOR);
-      return u32 as unknown as ArrayBufferView;
-    });
+    .mockImplementation(((arr: Uint32Array): Uint32Array => {
+      arr[0] = Math.floor(quantile * RANDOM_DENOMINATOR);
+      return arr;
+    }) as typeof crypto.getRandomValues);
 }
 
 describe('lib/ab-testing', () => {
@@ -46,8 +45,10 @@ describe('lib/ab-testing', () => {
       expect(
         assignVariant({
           name: 'biased',
-          variants: ['A', 'B'],
-          weights: [0.9, 0.1],
+          entries: [
+            { variant: 'A', weight: 0.9 },
+            { variant: 'B', weight: 0.1 },
+          ],
         }),
       ).toBe('A');
     });
@@ -58,8 +59,10 @@ describe('lib/ab-testing', () => {
       expect(
         assignVariant({
           name: 'biased',
-          variants: ['A', 'B'],
-          weights: [0.9, 0.1],
+          entries: [
+            { variant: 'A', weight: 0.9 },
+            { variant: 'B', weight: 0.1 },
+          ],
         }),
       ).toBe('B');
     });
@@ -71,8 +74,10 @@ describe('lib/ab-testing', () => {
         expect(
           assignVariant({
             name: 'all-a',
-            variants: ['A', 'B'],
-            weights: [1, 0],
+            entries: [
+              { variant: 'A', weight: 1 },
+              { variant: 'B', weight: 0 },
+            ],
           }),
         ).toBe('A');
       }
@@ -85,8 +90,10 @@ describe('lib/ab-testing', () => {
         expect(
           assignVariant({
             name: 'all-b',
-            variants: ['A', 'B'],
-            weights: [0, 1],
+            entries: [
+              { variant: 'A', weight: 0 },
+              { variant: 'B', weight: 1 },
+            ],
           }),
         ).toBe('B');
       }
@@ -98,8 +105,10 @@ describe('lib/ab-testing', () => {
       expect(
         assignVariant({
           name: 'underweight',
-          variants: ['A', 'B'],
-          weights: [0.1, 0.1],
+          entries: [
+            { variant: 'A', weight: 0.1 },
+            { variant: 'B', weight: 0.1 },
+          ],
         }),
       ).toBe('B');
     });
