@@ -45,6 +45,9 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Typecheck
+        run: npm run typecheck
+
       - name: Test
         run: npm test
 
@@ -127,6 +130,33 @@ jobs:
             exit 1
           fi
           echo "Smoke test passed."
+
+      - name: GET /crisis renders + security headers present
+        run: |
+          curl -s -i -o /tmp/crisis.txt http://localhost:8787/crisis
+          echo "--- /crisis response headers ---"
+          head -20 /tmp/crisis.txt
+          if ! head -1 /tmp/crisis.txt | grep -q " 200 "; then
+            echo "Expected HTTP 200 on /crisis"
+            exit 1
+          fi
+          if ! grep -qi "988" /tmp/crisis.txt; then
+            echo "Expected '988' in /crisis body"
+            exit 1
+          fi
+          if ! grep -qi "strict-transport-security" /tmp/crisis.txt; then
+            echo "Missing Strict-Transport-Security header"
+            exit 1
+          fi
+          if ! grep -qi "content-security-policy" /tmp/crisis.txt; then
+            echo "Missing Content-Security-Policy header"
+            exit 1
+          fi
+          if ! grep -qi "x-frame-options: DENY" /tmp/crisis.txt; then
+            echo "Missing X-Frame-Options: DENY header"
+            exit 1
+          fi
+          echo "GET /crisis smoke + headers smoke passed."
 
       - name: Stop wrangler dev
         if: always()
