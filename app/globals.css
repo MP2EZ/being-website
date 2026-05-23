@@ -28,6 +28,14 @@
   --color-warning: var(--color-status-warning);
   --color-error: var(--color-status-error);
   --color-info: var(--color-status-info);
+  --color-critical: var(--color-status-critical);
+
+  /* Status backgrounds */
+  --color-success-bg: var(--color-status-successBackground);
+  --color-warning-bg: var(--color-status-warningBackground);
+  --color-error-bg: var(--color-status-errorBackground);
+  --color-info-bg: var(--color-status-infoBackground);
+  --color-critical-bg: var(--color-status-criticalBackground);
 
   /* Crisis shorthand */
   --color-crisis-bg: var(--color-crisis-background);

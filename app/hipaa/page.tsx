@@ -19,7 +19,7 @@ export default function HIPAAPage() {
 
         <div className="prose prose-lg max-w-none">
           {/* Important Distinction */}
-          <section className="bg-yellow-50 p-8 rounded-lg border-2 border-yellow-400 mb-8">
+          <section className="bg-warning-bg p-8 rounded-lg border-2 border-warning mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Important: Being is NOT a HIPAA Covered Entity
             </h2>
@@ -289,7 +289,7 @@ export default function HIPAAPage() {
         </div>
 
         {/* Attorney Review Notice */}
-        <div className="mt-12 p-6 bg-yellow-50 border-2 border-yellow-400 rounded-lg">
+        <div className="mt-12 p-6 bg-warning-bg border-2 border-warning rounded-lg">
           <p className="text-sm text-gray-800">
             <strong>⚠️ DRAFT DOCUMENT:</strong> This HIPAA Notice requires attorney review before
             publication. Note: Being is NOT legally subject to HIPAA (we're a wellness app, not a
