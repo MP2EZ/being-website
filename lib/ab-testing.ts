@@ -17,17 +17,24 @@ export const AB_COOKIE_MAX_AGE = 30 * 24 * 60 * 60; // 30 days in seconds
 // Experiment configuration
 export type Variant = 'A' | 'B';
 
+export interface VariantWeight {
+  variant: Variant;
+  weight: number;
+}
+
 export interface ExperimentConfig {
   name: string;
-  variants: Variant[];
-  weights: number[]; // Must sum to 1.0
+  // Coupled variant/weight pairs so the two can't drift in length.
+  entries: VariantWeight[];
 }
 
 // Default experiment: 50/50 split
 export const DEFAULT_EXPERIMENT: ExperimentConfig = {
   name: 'default',
-  variants: ['A', 'B'],
-  weights: [0.5, 0.5],
+  entries: [
+    { variant: 'A', weight: 0.5 },
+    { variant: 'B', weight: 0.5 },
+  ],
 };
 
 /**
@@ -35,18 +42,20 @@ export const DEFAULT_EXPERIMENT: ExperimentConfig = {
  * Uses crypto.getRandomValues for unbiased randomness
  */
 export function assignVariant(config: ExperimentConfig = DEFAULT_EXPERIMENT): Variant {
-  const random = crypto.getRandomValues(new Uint32Array(1))[0] / (0xffffffff + 1);
+  const buf = new Uint32Array(1);
+  crypto.getRandomValues(buf);
+  const random = buf[0]! / (0xffffffff + 1);
 
   let cumulative = 0;
-  for (let i = 0; i < config.variants.length; i++) {
-    cumulative += config.weights[i];
+  for (const { variant, weight } of config.entries) {
+    cumulative += weight;
     if (random < cumulative) {
-      return config.variants[i];
+      return variant;
     }
   }
 
   // Fallback to last variant (shouldn't happen with proper weights)
-  return config.variants[config.variants.length - 1];
+  return config.entries[config.entries.length - 1]!.variant;
 }
 
 /**
