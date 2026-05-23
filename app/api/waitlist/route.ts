@@ -7,22 +7,26 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getVariant, trackConversion, type Variant } from '@/lib/ab-testing';
+import { z } from 'zod';
+import { getVariant, trackConversion } from '@/lib/ab-testing';
 
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
 const NOTION_DATABASE_ID = process.env.NOTION_WAITLIST_DB_ID;
 
+const BodySchema = z.object({
+  email: z.string().email(),
+});
+
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json();
-
-    // Validate email
-    if (!email || !email.includes('@')) {
+    const parsed = BodySchema.safeParse(await request.json());
+    if (!parsed.success) {
       return NextResponse.json(
         { error: 'Valid email required' },
         { status: 400 }
       );
     }
+    const { email } = parsed.data;
 
     // Validate environment variables
     if (!NOTION_TOKEN || !NOTION_DATABASE_ID) {
