@@ -19,7 +19,7 @@ export default function QRCodePlaceholder({ platform, className = '' }: QRCodePl
     <div className={`flex flex-col items-center ${className}`}>
       {/* QR Code Container */}
       <div
-        className="relative bg-white p-4 rounded-lg"
+        className="relative bg-white p-4 rounded-large"
         style={{
           width: '300px',
           height: '300px',
@@ -31,7 +31,7 @@ export default function QRCodePlaceholder({ platform, className = '' }: QRCodePl
           {GRID_OPACITIES.map((opacity, i) => (
             <div
               key={i}
-              className="bg-gray-300 rounded-sm"
+              className="bg-gray-300 rounded-small"
               style={{ opacity }}
             />
           ))}
@@ -39,7 +39,7 @@ export default function QRCodePlaceholder({ platform, className = '' }: QRCodePl
 
         {/* Center logo placeholder */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="bg-white p-3 rounded-lg shadow-lg">
+          <div className="bg-white p-3 rounded-large shadow-lg">
             <div className="text-4xl">🧠</div>
           </div>
         </div>

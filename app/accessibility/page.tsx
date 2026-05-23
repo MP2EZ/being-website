@@ -18,7 +18,7 @@ export default function AccessibilityPage() {
 
         <div className="prose prose-lg max-w-none">
           {/* Our Commitment */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Our Commitment to Accessibility
             </h2>
@@ -34,7 +34,7 @@ export default function AccessibilityPage() {
           </section>
 
           {/* Accessibility Features */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Accessibility Features
             </h2>
@@ -109,7 +109,7 @@ export default function AccessibilityPage() {
           </section>
 
           {/* Known Limitations */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Known Limitations
             </h2>
@@ -129,7 +129,7 @@ export default function AccessibilityPage() {
           </section>
 
           {/* Standards We Follow */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Standards We Follow
             </h2>
@@ -154,7 +154,7 @@ export default function AccessibilityPage() {
           </section>
 
           {/* Testing & Compliance */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Testing & Compliance
             </h2>
@@ -186,7 +186,7 @@ export default function AccessibilityPage() {
           </section>
 
           {/* Feedback & Support */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Feedback & Support
             </h2>
@@ -212,7 +212,7 @@ export default function AccessibilityPage() {
           </section>
 
           {/* Third-Party Content */}
-          <section className="bg-white p-8 rounded-lg border border-gray-300 mb-8">
+          <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Third-Party Content
             </h2>
@@ -228,7 +228,7 @@ export default function AccessibilityPage() {
           </section>
 
           {/* Continuous Improvement */}
-          <section className="bg-gray-50 p-8 rounded-lg border-l-4 border-accent-600 mb-8">
+          <section className="bg-gray-50 p-8 rounded-large border-l-4 border-accent-600 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Our Commitment to Continuous Improvement
             </h2>

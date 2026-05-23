@@ -36,7 +36,7 @@ export default function DesktopNav() {
       {/* 988 Crisis Button (calm styling, not alarm) */}
       <Link
         href="/crisis"
-        className="px-4 py-2 bg-crisis-bg text-crisis-text border border-crisis-border rounded-md hover:bg-opacity-80 transition-all"
+        className="px-4 py-2 bg-crisis-bg text-crisis-text border border-crisis-border rounded-medium hover:bg-opacity-80 transition-all"
       >
         988 Crisis Support
       </Link>

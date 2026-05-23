@@ -36,7 +36,7 @@ export default function DownloadPage() {
 
           <div className="mt-16 sm:mt-20 flex flex-col sm:flex-row items-center justify-center gap-8 mb-12">
             {/* iOS App Store Badge - PLACEHOLDER */}
-            <div className="bg-white p-8 rounded-xl border-2 border-gray-900 w-64 h-32 flex items-center justify-center hover:shadow-lg transition-shadow">
+            <div className="bg-white p-8 rounded-large border-2 border-gray-900 w-64 h-32 flex items-center justify-center hover:shadow-lg transition-shadow">
               <div className="text-center">
                 <div className="text-3xl mb-2">🍎</div>
                 <p className="text-sm text-gray-700 font-medium">iOS App Store Badge</p>
@@ -45,7 +45,7 @@ export default function DownloadPage() {
             </div>
 
             {/* Google Play Badge - PLACEHOLDER */}
-            <div className="bg-white p-8 rounded-xl border-2 border-gray-900 w-64 h-32 flex items-center justify-center hover:shadow-lg transition-shadow">
+            <div className="bg-white p-8 rounded-large border-2 border-gray-900 w-64 h-32 flex items-center justify-center hover:shadow-lg transition-shadow">
               <div className="text-center">
                 <div className="text-3xl mb-2">🤖</div>
                 <p className="text-sm text-gray-700 font-medium">Google Play Badge</p>
@@ -55,13 +55,13 @@ export default function DownloadPage() {
           </div>
 
           {/* QR Codes - PLACEHOLDER */}
-          <div className="bg-white p-10 rounded-xl border-2 border-gray-200">
+          <div className="bg-white p-10 rounded-large border-2 border-gray-200">
             <h3 className="text-xl font-semibold text-gray-900 text-center mb-8">
               Scan to download on your phone
             </h3>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-12">
               <div className="text-center">
-                <div className="w-48 h-48 bg-gray-100 rounded-xl flex items-center justify-center mb-3 border-2 border-gray-200">
+                <div className="w-48 h-48 bg-gray-100 rounded-large flex items-center justify-center mb-3 border-2 border-gray-200">
                   <div>
                     <div className="text-4xl mb-2">📱</div>
                     <p className="text-sm text-gray-600">iOS QR Code</p>
@@ -72,7 +72,7 @@ export default function DownloadPage() {
               </div>
 
               <div className="text-center">
-                <div className="w-48 h-48 bg-gray-100 rounded-xl flex items-center justify-center mb-3 border-2 border-gray-200">
+                <div className="w-48 h-48 bg-gray-100 rounded-large flex items-center justify-center mb-3 border-2 border-gray-200">
                   <div>
                     <div className="text-4xl mb-2">📱</div>
                     <p className="text-sm text-gray-600">Android QR Code</p>
@@ -100,7 +100,7 @@ export default function DownloadPage() {
 
           <div className="mt-20 sm:mt-24 grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
             {/* Free Trial */}
-            <div className="bg-white p-12 rounded-xl border-2 border-accent-500">
+            <div className="bg-white p-12 rounded-large border-2 border-accent-500">
               <div className="text-center mb-8">
                 <div className="text-3xl opacity-60 mb-4">🎁</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">Free Trial</h3>
@@ -128,7 +128,7 @@ export default function DownloadPage() {
             </div>
 
             {/* Subscription Pricing */}
-            <div className="bg-white p-12 rounded-xl border-2 border-gray-200">
+            <div className="bg-white p-12 rounded-large border-2 border-gray-200">
               <div className="text-center mb-8">
                 <div className="text-3xl opacity-60 mb-4">📅</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">Subscription</h3>

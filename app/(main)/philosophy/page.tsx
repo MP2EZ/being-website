@@ -96,7 +96,7 @@ export default function PhilosophyPage() {
           </div>
 
           {/* The Synthesis */}
-          <div className="mt-20 sm:mt-24 bg-gray-900 text-white p-12 rounded-xl max-w-4xl mx-auto">
+          <div className="mt-20 sm:mt-24 bg-gray-900 text-white p-12 rounded-large max-w-4xl mx-auto">
             <h3 className="text-2xl font-semibold mb-4">The Synthesis</h3>
             <p className="text-lg leading-relaxed mb-4 text-gray-100">
               <strong>Aware Wisdom = Metacognitive Awareness × Philosophical Discernment</strong>
@@ -210,7 +210,7 @@ export default function PhilosophyPage() {
             </div>
           </div>
 
-          <div className="mt-20 sm:mt-24 p-10 bg-gray-50 rounded-xl text-center max-w-4xl mx-auto">
+          <div className="mt-20 sm:mt-24 p-10 bg-gray-50 rounded-large text-center max-w-4xl mx-auto">
             <p className="text-gray-700 leading-relaxed">
               These five principles work together. Aware Presence grounds you in the moment. Radical Acceptance
               meets reality honestly. Sphere Sovereignty focuses your energy. Virtuous Response guides your
@@ -229,7 +229,7 @@ export default function PhilosophyPage() {
 
           <div className="mt-20 sm:mt-24 grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
             {/* vs Traditional Mindfulness */}
-            <div className="bg-white p-12 rounded-xl shadow-sm">
+            <div className="bg-white p-12 rounded-large shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-8 text-center">
                 vs. Traditional Mindfulness
               </h3>
@@ -259,7 +259,7 @@ export default function PhilosophyPage() {
             </div>
 
             {/* vs Classical Stoicism */}
-            <div className="bg-white p-12 rounded-xl shadow-sm">
+            <div className="bg-white p-12 rounded-large shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-8 text-center">
                 vs. Classical Stoicism
               </h3>
