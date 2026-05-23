@@ -57,3 +57,6 @@ content/legal
 
 # Build logs
 *.tsbuildinfo
+
+# Generated tool outputs (Claude Code /audit, etc.)
+/.audit-report.md
