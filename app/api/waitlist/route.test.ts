@@ -128,10 +128,10 @@ describe('POST /api/waitlist', () => {
     expect(ab.trackConversion).not.toHaveBeenCalled();
   });
 
-  it('returns 500 when request body is malformed JSON', async () => {
+  it("returns 400 'Invalid JSON' when request body is malformed", async () => {
     const { route } = await importRouteFresh();
     const res = await route.POST(buildRequest('not-json'));
-    expect(res.status).toBe(500);
-    expect(await res.json()).toEqual({ error: 'Failed to join waitlist' });
+    expect(res.status).toBe(400);
+    expect(await res.json()).toEqual({ error: 'Invalid JSON' });
   });
 });

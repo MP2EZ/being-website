@@ -18,8 +18,17 @@ const BodySchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  // Parse body separately so malformed JSON is a 400 (client error),
+  // not a 500 conflated with upstream/Notion failures.
+  let body: unknown;
   try {
-    const parsed = BodySchema.safeParse(await request.json());
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
+  }
+
+  try {
+    const parsed = BodySchema.safeParse(body);
     if (!parsed.success) {
       return NextResponse.json(
         { error: 'Valid email required' },
