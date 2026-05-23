@@ -96,7 +96,11 @@ export default function ComingSoon() {
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="flex flex-col sm:flex-row gap-3">
+              <label htmlFor="email-input" className="sr-only">
+                Email address
+              </label>
               <input
+                id="email-input"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -112,7 +116,6 @@ export default function ComingSoon() {
                   transition-all duration-150
                   min-h-[48px]
                 "
-                aria-label="Email address"
               />
               <button
                 type="submit"

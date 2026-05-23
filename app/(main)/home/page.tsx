@@ -90,7 +90,7 @@ export default function Home() {
                   className="text-accent-600 hover:text-accent-700 font-medium transition-colors duration-150 inline-flex items-center gap-1"
                 >
                   Learn about Stoic Mindfulness
-                  <span className="text-xs">→</span>
+                  <span aria-hidden="true" className="text-xs">→</span>
                 </Link>
               </div>
             </div>
@@ -112,7 +112,7 @@ export default function Home() {
                   className="text-accent-600 hover:text-accent-700 font-medium transition-colors duration-150 inline-flex items-center gap-1"
                 >
                   Explore app features
-                  <span className="text-xs">→</span>
+                  <span aria-hidden="true" className="text-xs">→</span>
                 </Link>
               </div>
             </div>
@@ -134,7 +134,7 @@ export default function Home() {
                   className="text-accent-600 hover:text-accent-700 font-medium transition-colors duration-150 inline-flex items-center gap-1"
                 >
                   Read privacy policy
-                  <span className="text-xs">→</span>
+                  <span aria-hidden="true" className="text-xs">→</span>
                 </Link>
               </div>
             </div>
