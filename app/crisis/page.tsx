@@ -223,8 +223,8 @@ export default function CrisisPage() {
       {/* When to Call 911 */}
       <section className="px-6 py-16 bg-white">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-red-50 border-2 border-red-300 rounded-lg p-8">
-            <h2 className="text-2xl font-bold text-red-900 mb-4">
+          <div className="bg-critical-bg border-2 border-critical rounded-lg p-8">
+            <h2 className="text-2xl font-bold text-critical mb-4">
               When to call 911 (Emergency)
             </h2>
             <p className="text-gray-800 leading-relaxed mb-4">
@@ -232,23 +232,23 @@ export default function CrisisPage() {
             </p>
             <ul className="space-y-2 text-gray-800">
               <li className="flex items-start">
-                <span className="text-red-600 mr-3">•</span>
+                <span className="text-critical mr-3">•</span>
                 <span>You or someone else has taken action to harm themselves</span>
               </li>
               <li className="flex items-start">
-                <span className="text-red-600 mr-3">•</span>
+                <span className="text-critical mr-3">•</span>
                 <span>There is an immediate medical emergency</span>
               </li>
               <li className="flex items-start">
-                <span className="text-red-600 mr-3">•</span>
+                <span className="text-critical mr-3">•</span>
                 <span>Someone is threatening to harm themselves or others right now</span>
               </li>
               <li className="flex items-start">
-                <span className="text-red-600 mr-3">•</span>
+                <span className="text-critical mr-3">•</span>
                 <span>There is an active life-threatening situation</span>
               </li>
             </ul>
-            <div className="mt-6 pt-6 border-t border-red-300">
+            <div className="mt-6 pt-6 border-t border-critical">
               <p className="text-sm text-gray-700">
                 <strong>Note:</strong> 988 is for crisis support and suicide prevention. 911
                 is for immediate medical emergencies and life-threatening situations.
