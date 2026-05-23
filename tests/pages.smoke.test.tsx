@@ -1,45 +1,55 @@
 /**
  * Page render smoke tests.
  *
- * Renders every server-component page via renderToString and asserts the
- * output is non-trivial markup. Catches build-time-only failures (broken
- * imports, missing exports, runtime exceptions in JSX) that `next build`
- * is the only safety net for today.
+ * Renders every server-component page via renderToString and asserts:
+ *   1. Non-trivial markup is emitted (length > 100, contains '<')
+ *   2. For regulated / safety-critical pages, specific content tokens are
+ *      present in the output. A regression that wipes the 988 string from
+ *      /crisis or the HIPAA non-applicability statement from /hipaa would
+ *      pass step 1 but fail step 2.
  *
- * The (standalone) splash is excluded: it's 'use client' with stateful
- * hooks that don't survive renderToString cleanly. Worth a separate
- * @testing-library/react render in a follow-up.
+ * The (standalone) splash is covered separately in tests/standalone.test.tsx
+ * because its 'use client' + stateful hooks don't survive renderToString.
  */
 
 import { describe, it, expect } from 'vitest';
 import { renderToString } from 'react-dom/server';
 
-const pages = [
-  { name: 'home',               load: () => import('@/app/(main)/home/page') },
-  { name: 'philosophy',         load: () => import('@/app/(main)/philosophy/page') },
-  { name: 'features',           load: () => import('@/app/(main)/features/page') },
-  { name: 'download',           load: () => import('@/app/(main)/download/page') },
-  { name: 'main-privacy',       load: () => import('@/app/(main)/privacy/page') },
-  { name: 'terms',              load: () => import('@/app/(main)/terms/page') },
-  { name: 'cookies',            load: () => import('@/app/(main)/cookies/page') },
-  { name: 'crisis',             load: () => import('@/app/crisis/page') },
-  { name: 'hipaa',              load: () => import('@/app/hipaa/page') },
-  { name: 'california-privacy', load: () => import('@/app/privacy/california/page') },
-  { name: 'privacy-practices',  load: () => import('@/app/privacy-practices/page') },
-  { name: 'accessibility',      load: () => import('@/app/accessibility/page') },
-  { name: 'disclaimers',        load: () => import('@/app/disclaimers/page') },
-  { name: 'do-not-sell',        load: () => import('@/app/do-not-sell/page') },
-  { name: 'support',            load: () => import('@/app/support/page') },
-] as const;
+type Page = {
+  name: string;
+  load: () => Promise<{ default: () => React.ReactElement }>;
+  requires: readonly string[];
+};
+
+const pages: readonly Page[] = [
+  { name: 'home',               load: () => import('@/app/(main)/home/page'),              requires: ['Mindfulness'] },
+  { name: 'philosophy',         load: () => import('@/app/(main)/philosophy/page'),        requires: ['Stoic'] },
+  { name: 'features',           load: () => import('@/app/(main)/features/page'),          requires: [] },
+  { name: 'download',           load: () => import('@/app/(main)/download/page'),          requires: [] },
+  { name: 'main-privacy',       load: () => import('@/app/(main)/privacy/page'),           requires: ['Privacy'] },
+  { name: 'terms',              load: () => import('@/app/(main)/terms/page'),             requires: ['Terms'] },
+  { name: 'cookies',            load: () => import('@/app/(main)/cookies/page'),           requires: ['Cookie'] },
+  { name: 'crisis',             load: () => import('@/app/crisis/page'),                   requires: ['988', 'Crisis Lifeline'] },
+  { name: 'hipaa',              load: () => import('@/app/hipaa/page'),                    requires: ['NOT a HIPAA Covered Entity'] },
+  { name: 'california-privacy', load: () => import('@/app/privacy/california/page'),       requires: ['CCPA'] },
+  { name: 'privacy-practices',  load: () => import('@/app/privacy-practices/page'),        requires: [] },
+  { name: 'accessibility',      load: () => import('@/app/accessibility/page'),            requires: ['WCAG'] },
+  { name: 'disclaimers',        load: () => import('@/app/disclaimers/page'),              requires: ['medical'] },
+  { name: 'do-not-sell',        load: () => import('@/app/do-not-sell/page'),              requires: ['Do Not Sell'] },
+  { name: 'support',            load: () => import('@/app/support/page'),                  requires: [] },
+];
 
 describe('page render smoke tests', () => {
-  for (const { name, load } of pages) {
+  for (const { name, load, requires } of pages) {
     it(`${name} renders without throwing`, async () => {
       const mod = await load();
       const Page = mod.default;
       const html = renderToString(<Page />);
       expect(html).toContain('<');
       expect(html.length).toBeGreaterThan(100);
+      for (const token of requires) {
+        expect(html, `${name} should contain "${token}"`).toContain(token);
+      }
     });
   }
 });
