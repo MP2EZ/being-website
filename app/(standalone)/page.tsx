@@ -8,6 +8,7 @@
 
 import { useState, FormEvent } from 'react';
 import { redirect } from 'next/navigation';
+import { Turnstile } from '@marsidev/react-turnstile';
 import BrainIcon from '@/components/shared/BrainIcon';
 
 // Redirect to full site when NEXT_PUBLIC_SHOW_FULL_SITE is enabled
@@ -15,13 +16,21 @@ if (process.env.NEXT_PUBLIC_SHOW_FULL_SITE === 'true') {
   redirect('/home');
 }
 
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
 export default function ComingSoon() {
   const [email, setEmail] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState('');
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!turnstileToken) {
+      setStatus('error');
+      setErrorMessage('Please complete the verification.');
+      return;
+    }
     setStatus('submitting');
     setErrorMessage('');
 
@@ -29,7 +38,7 @@ export default function ComingSoon() {
       const response = await fetch('/api/waitlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, turnstileToken }),
       });
 
       if (!response.ok) {
@@ -38,6 +47,7 @@ export default function ComingSoon() {
 
       setStatus('success');
       setEmail('');
+      setTurnstileToken('');
     } catch (error) {
       setStatus('error');
       setErrorMessage('Something went wrong. Please try again.');
@@ -116,7 +126,7 @@ export default function ComingSoon() {
               />
               <button
                 type="submit"
-                disabled={status === 'submitting'}
+                disabled={status === 'submitting' || !turnstileToken}
                 className="
                   px-6 py-3
                   bg-accent-600 text-white font-medium
@@ -131,6 +141,18 @@ export default function ComingSoon() {
                 {status === 'submitting' ? 'Joining...' : 'Get Notified'}
               </button>
             </div>
+
+            {TURNSTILE_SITE_KEY && (
+              <div className="flex justify-center">
+                <Turnstile
+                  siteKey={TURNSTILE_SITE_KEY}
+                  onSuccess={setTurnstileToken}
+                  onExpire={() => setTurnstileToken('')}
+                  onError={() => setTurnstileToken('')}
+                  options={{ theme: 'light' }}
+                />
+              </div>
+            )}
 
             {status === 'error' && (
               <p className="text-sm text-error" role="alert">

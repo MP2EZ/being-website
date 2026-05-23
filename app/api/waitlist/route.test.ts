@@ -6,6 +6,10 @@ vi.mock('@/lib/ab-testing', () => ({
   trackConversion: vi.fn(),
 }));
 
+vi.mock('@/lib/turnstile', () => ({
+  verifyTurnstile: vi.fn(),
+}));
+
 function buildRequest(body: unknown): NextRequest {
   return new NextRequest('http://localhost/api/waitlist', {
     method: 'POST',
@@ -15,13 +19,21 @@ function buildRequest(body: unknown): NextRequest {
 
 type RouteModule = typeof import('./route');
 type AbModule = typeof import('@/lib/ab-testing');
+type TurnstileModule = typeof import('@/lib/turnstile');
 
-async function importRouteFresh(): Promise<{ route: RouteModule; ab: AbModule }> {
+async function importRouteFresh(): Promise<{
+  route: RouteModule;
+  ab: AbModule;
+  turnstile: TurnstileModule;
+}> {
   vi.resetModules();
   const ab = (await import('@/lib/ab-testing')) as AbModule;
+  const turnstile = (await import('@/lib/turnstile')) as TurnstileModule;
   const route = (await import('./route')) as RouteModule;
-  return { route, ab };
+  return { route, ab, turnstile };
 }
+
+const VALID_BODY = { email: 'a@b.com', turnstileToken: 'test-token' };
 
 describe('POST /api/waitlist', () => {
   beforeEach(() => {
@@ -41,25 +53,36 @@ describe('POST /api/waitlist', () => {
     const { route, ab } = await importRouteFresh();
     (ab.getVariant as ReturnType<typeof vi.fn>).mockResolvedValue(null);
 
-    const res = await route.POST(buildRequest({}));
+    const res = await route.POST(
+      buildRequest({ turnstileToken: 'test-token' }),
+    );
     expect(res.status).toBe(400);
-    expect(await res.json()).toEqual({ error: 'Valid email required' });
+    expect(await res.json()).toEqual({ error: 'Invalid input' });
   });
 
-  it('returns 400 when email lacks @', async () => {
+  it('returns 400 when email is not a valid email', async () => {
     const { route, ab } = await importRouteFresh();
     (ab.getVariant as ReturnType<typeof vi.fn>).mockResolvedValue(null);
 
-    const res = await route.POST(buildRequest({ email: 'invalid' }));
+    const res = await route.POST(
+      buildRequest({ email: 'invalid', turnstileToken: 'test-token' }),
+    );
     expect(res.status).toBe(400);
-    expect(await res.json()).toEqual({ error: 'Valid email required' });
+    expect(await res.json()).toEqual({ error: 'Invalid input' });
+  });
+
+  it('returns 400 when turnstileToken is missing', async () => {
+    const { route } = await importRouteFresh();
+    const res = await route.POST(buildRequest({ email: 'a@b.com' }));
+    expect(res.status).toBe(400);
+    expect(await res.json()).toEqual({ error: 'Invalid input' });
   });
 
   it('returns 500 when NOTION_TOKEN is missing', async () => {
     vi.stubEnv('NOTION_TOKEN', '');
     const { route } = await importRouteFresh();
 
-    const res = await route.POST(buildRequest({ email: 'a@b.com' }));
+    const res = await route.POST(buildRequest(VALID_BODY));
     expect(res.status).toBe(500);
     expect(await res.json()).toEqual({ error: 'Server configuration error' });
   });
@@ -68,25 +91,39 @@ describe('POST /api/waitlist', () => {
     vi.stubEnv('NOTION_WAITLIST_DB_ID', '');
     const { route } = await importRouteFresh();
 
-    const res = await route.POST(buildRequest({ email: 'a@b.com' }));
+    const res = await route.POST(buildRequest(VALID_BODY));
     expect(res.status).toBe(500);
     expect(await res.json()).toEqual({ error: 'Server configuration error' });
   });
 
+  it('returns 400 when Turnstile verification fails', async () => {
+    const { route, turnstile } = await importRouteFresh();
+    (turnstile.verifyTurnstile as ReturnType<typeof vi.fn>).mockResolvedValue(
+      false,
+    );
+
+    const res = await route.POST(buildRequest(VALID_BODY));
+    expect(res.status).toBe(400);
+    expect(await res.json()).toEqual({ error: 'Verification failed' });
+  });
+
   it('posts to Notion without Variant when no A/B variant assigned', async () => {
-    const { route, ab } = await importRouteFresh();
+    const { route, ab, turnstile } = await importRouteFresh();
+    (turnstile.verifyTurnstile as ReturnType<typeof vi.fn>).mockResolvedValue(
+      true,
+    );
     (ab.getVariant as ReturnType<typeof vi.fn>).mockResolvedValue(null);
     const fetchSpy = vi
       .spyOn(global, 'fetch')
       .mockResolvedValue(new Response(JSON.stringify({}), { status: 200 }));
 
-    const res = await route.POST(buildRequest({ email: 'a@b.com' }));
+    const res = await route.POST(buildRequest(VALID_BODY));
 
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ success: true });
     expect(fetchSpy).toHaveBeenCalledOnce();
 
-    const [url, init] = fetchSpy.mock.calls[0];
+    const [url, init] = fetchSpy.mock.calls[0]!;
     expect(url).toBe('https://api.notion.com/v1/pages');
     const sent = JSON.parse((init as RequestInit).body as string);
     expect(sent.properties.Email.title[0].text.content).toBe('a@b.com');
@@ -98,30 +135,36 @@ describe('POST /api/waitlist', () => {
   });
 
   it('posts to Notion with Variant and tracks conversion when variant assigned', async () => {
-    const { route, ab } = await importRouteFresh();
+    const { route, ab, turnstile } = await importRouteFresh();
+    (turnstile.verifyTurnstile as ReturnType<typeof vi.fn>).mockResolvedValue(
+      true,
+    );
     (ab.getVariant as ReturnType<typeof vi.fn>).mockResolvedValue('A');
     const fetchSpy = vi
       .spyOn(global, 'fetch')
       .mockResolvedValue(new Response(JSON.stringify({}), { status: 200 }));
 
-    const res = await route.POST(buildRequest({ email: 'a@b.com' }));
+    const res = await route.POST(buildRequest(VALID_BODY));
 
     expect(res.status).toBe(200);
     const sent = JSON.parse(
-      (fetchSpy.mock.calls[0][1] as RequestInit).body as string,
+      (fetchSpy.mock.calls[0]![1] as RequestInit).body as string,
     );
     expect(sent.properties.Variant).toEqual({ select: { name: 'A' } });
     expect(ab.trackConversion).toHaveBeenCalledWith('A', 'waitlist_signup');
   });
 
   it('returns 500 when Notion API responds non-ok', async () => {
-    const { route, ab } = await importRouteFresh();
+    const { route, ab, turnstile } = await importRouteFresh();
+    (turnstile.verifyTurnstile as ReturnType<typeof vi.fn>).mockResolvedValue(
+      true,
+    );
     (ab.getVariant as ReturnType<typeof vi.fn>).mockResolvedValue(null);
     vi.spyOn(global, 'fetch').mockResolvedValue(
       new Response(JSON.stringify({ error: 'invalid' }), { status: 500 }),
     );
 
-    const res = await route.POST(buildRequest({ email: 'a@b.com' }));
+    const res = await route.POST(buildRequest(VALID_BODY));
 
     expect(res.status).toBe(500);
     expect(await res.json()).toEqual({ error: 'Failed to join waitlist' });

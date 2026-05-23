@@ -7,24 +7,29 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getVariant, trackConversion, type Variant } from '@/lib/ab-testing';
+import { z } from 'zod';
+import { getVariant, trackConversion } from '@/lib/ab-testing';
+import { verifyTurnstile } from '@/lib/turnstile';
 
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
 const NOTION_DATABASE_ID = process.env.NOTION_WAITLIST_DB_ID;
 
+const BodySchema = z.object({
+  email: z.string().email(),
+  turnstileToken: z.string().min(1),
+});
+
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json();
-
-    // Validate email
-    if (!email || !email.includes('@')) {
+    const parsed = BodySchema.safeParse(await request.json());
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: 'Valid email required' },
+        { error: 'Invalid input' },
         { status: 400 }
       );
     }
+    const { email, turnstileToken } = parsed.data;
 
-    // Validate environment variables
     if (!NOTION_TOKEN || !NOTION_DATABASE_ID) {
       console.error('Missing Notion credentials');
       return NextResponse.json(
@@ -33,10 +38,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get A/B variant for conversion tracking
+    const ip = request.headers.get('cf-connecting-ip') ?? undefined;
+    const verified = await verifyTurnstile(turnstileToken, ip);
+    if (!verified) {
+      return NextResponse.json(
+        { error: 'Verification failed' },
+        { status: 400 }
+      );
+    }
+
     const variant = await getVariant();
 
-    // Build Notion properties with variant if available
     const properties: Record<string, unknown> = {
       Email: {
         title: [
@@ -54,7 +66,6 @@ export async function POST(request: NextRequest) {
       },
     };
 
-    // Add variant to Notion if assigned (for conversion analysis)
     if (variant) {
       properties['Variant'] = {
         select: {
@@ -63,7 +74,6 @@ export async function POST(request: NextRequest) {
       };
     }
 
-    // Add to Notion database
     const response = await fetch('https://api.notion.com/v1/pages', {
       method: 'POST',
       headers: {
@@ -83,7 +93,6 @@ export async function POST(request: NextRequest) {
       throw new Error('Failed to add to Notion');
     }
 
-    // Track conversion for A/B analysis
     if (variant) {
       trackConversion(variant, 'waitlist_signup');
     }
