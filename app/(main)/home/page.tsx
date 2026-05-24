@@ -104,7 +104,7 @@ export default function Home() {
                 Science
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                Clinical tools (PHQ-9, GAD-7) track your mental health. Immediate crisis support via 988. Mindfulness meets evidence-based care.
+                Wellness self-monitoring tools (PHQ-9, GAD-7) help you track your mental health. Immediate crisis support via 988. Mindfulness grounded in evidence-based practice.
               </p>
               <div>
                 <Link
