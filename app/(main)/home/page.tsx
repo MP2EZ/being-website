@@ -56,7 +56,7 @@ export default function Home() {
 
           {/* Trust Signal */}
           <p className="text-sm text-gray-500 pt-4">
-            28-day free trial · No credit card required
+            1 month free trial · No credit card required
           </p>
         </div>
       </section>
@@ -153,7 +153,7 @@ export default function Home() {
           </h2>
 
           <p className="text-lg text-gray-600 leading-relaxed mb-6">
-            Join thousands practicing Stoic Mindfulness. Start your 28-day free trial today.
+            Join thousands practicing Stoic Mindfulness. Start your 1 month free trial today.
           </p>
 
           <div>
