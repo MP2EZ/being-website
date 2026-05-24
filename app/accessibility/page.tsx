@@ -12,7 +12,7 @@ export default function AccessibilityPage() {
             Accessibility Statement
           </h1>
           <p className="text-gray-700">
-            <strong>Last Updated:</strong> [DATE - TO BE DETERMINED]
+            <strong>Last Updated:</strong> May 23, 2026
           </p>
         </header>
 
@@ -140,10 +140,6 @@ export default function AccessibilityPage() {
               </li>
               <li className="flex items-start">
                 <span className="text-accent-600 mr-2">•</span>
-                <span><strong>Section 508:</strong> U.S. federal accessibility requirements</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-accent-600 mr-2">•</span>
                 <span><strong>iOS Accessibility:</strong> Apple Human Interface Guidelines</span>
               </li>
               <li className="flex items-start">
@@ -153,36 +149,19 @@ export default function AccessibilityPage() {
             </ul>
           </section>
 
-          {/* Testing & Compliance */}
+          {/* Reporting Accessibility Issues */}
           <section className="bg-white p-8 rounded-large border border-gray-300 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              Testing & Compliance
+              Reporting Accessibility Issues
             </h2>
-            <p className="text-gray-700 leading-relaxed mb-4">
-              We regularly test Being's accessibility through:
+            <p className="text-gray-700 leading-relaxed">
+              We design to WCAG 2.1 Level AA standards. If you encounter an
+              accessibility barrier, please report it to{' '}
+              <a href="mailto:accessibility@being.fyi" className="text-accent-600 hover:underline">
+                accessibility@being.fyi
+              </a>{' '}
+              and we will work to address it.
             </p>
-            <ul className="space-y-2 text-gray-700">
-              <li className="flex items-start">
-                <span className="text-accent-600 mr-2">•</span>
-                <span>Automated accessibility testing with aXe and Lighthouse</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-accent-600 mr-2">•</span>
-                <span>Manual testing with VoiceOver, TalkBack, and NVDA screen readers</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-accent-600 mr-2">•</span>
-                <span>Keyboard-only navigation testing</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-accent-600 mr-2">•</span>
-                <span>Color contrast validation</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-accent-600 mr-2">•</span>
-                <span>User testing with people who rely on assistive technologies</span>
-              </li>
-            </ul>
           </section>
 
           {/* Feedback & Support */}

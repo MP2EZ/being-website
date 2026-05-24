@@ -56,7 +56,7 @@ export default function Home() {
 
           {/* Trust Signal */}
           <p className="text-sm text-gray-500 pt-4">
-            28-day free trial · No credit card required
+            1 month free trial · No credit card required
           </p>
         </div>
       </section>
@@ -104,7 +104,7 @@ export default function Home() {
                 Science
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                Clinical tools (PHQ-9, GAD-7) track your mental health. Immediate crisis support via 988. Mindfulness meets evidence-based care.
+                Wellness self-monitoring tools (PHQ-9, GAD-7) help you track your mental health. Immediate crisis support via 988. Mindfulness grounded in evidence-based practice.
               </p>
               <div>
                 <Link
@@ -126,7 +126,7 @@ export default function Home() {
                 Privacy
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                HIPAA-level encryption. All data stored locally on your device. We never sell your information. Your mental health data belongs to you.
+                AES-256 encryption. All data stored locally on your device. We never sell your information. Your mental health data belongs to you.
               </p>
               <div>
                 <Link
@@ -153,7 +153,7 @@ export default function Home() {
           </h2>
 
           <p className="text-lg text-gray-600 leading-relaxed mb-6">
-            Join thousands practicing Stoic Mindfulness. Start your 28-day free trial today.
+            Join thousands practicing Stoic Mindfulness. Start your 1 month free trial today.
           </p>
 
           <div>
