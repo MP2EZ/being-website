@@ -5,8 +5,8 @@
  *   1. Non-trivial markup is emitted (length > 100, contains '<')
  *   2. For regulated / safety-critical pages, specific content tokens are
  *      present in the output. A regression that wipes the 988 string from
- *      /crisis or the HIPAA non-applicability statement from /hipaa would
- *      pass step 1 but fail step 2.
+ *      /crisis or the FTC Health Breach Notification commitment from the
+ *      privacy policy would pass step 1 but fail step 2.
  *
  * The (standalone) splash is covered separately in tests/standalone.test.tsx
  * because its 'use client' + stateful hooks don't survive renderToString.
@@ -30,7 +30,6 @@ const pages: readonly Page[] = [
   { name: 'terms',              load: () => import('@/app/(main)/terms/page'),             requires: ['Terms'] },
   { name: 'cookies',            load: () => import('@/app/(main)/cookies/page'),           requires: ['Cookie'] },
   { name: 'crisis',             load: () => import('@/app/crisis/page'),                   requires: ['988', 'Crisis Lifeline'] },
-  { name: 'hipaa',              load: () => import('@/app/hipaa/page'),                    requires: ['NOT a HIPAA Covered Entity'] },
   { name: 'california-privacy', load: () => import('@/app/privacy/california/page'),       requires: ['CCPA'] },
   { name: 'privacy-practices',  load: () => import('@/app/privacy-practices/page'),        requires: [] },
   { name: 'accessibility',      load: () => import('@/app/accessibility/page'),            requires: ['WCAG'] },

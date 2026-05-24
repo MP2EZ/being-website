@@ -12,7 +12,7 @@ export default function CookiesPage() {
             Cookie Policy
           </h1>
           <p className="text-gray-700">
-            <strong>Last Updated:</strong> [DATE - TO BE DETERMINED]
+            <strong>Last Updated:</strong> May 23, 2026
           </p>
         </header>
 
