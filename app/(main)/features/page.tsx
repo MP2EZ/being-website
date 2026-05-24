@@ -291,7 +291,7 @@ export default function FeaturesPage() {
           </h2>
           <p className="mt-6 text-lg text-gray-600 leading-relaxed">
             Experience Stoic Mindfulness with evidence-based self-monitoring tools.
-            Start your 28-day free trial today.
+            Start your 1 month free trial today.
           </p>
           <div className="mt-8">
             <Button href="/download" size="large">

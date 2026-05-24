@@ -21,7 +21,7 @@ export default function DownloadPage() {
             Download Being
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-            Start your Stoic Mindfulness practice today. 28-day free trial included.
+            Start your Stoic Mindfulness practice today. 1 month free trial included.
             No credit card required.
           </p>
         </div>
@@ -104,7 +104,7 @@ export default function DownloadPage() {
               <div className="text-center mb-8">
                 <div className="text-3xl opacity-60 mb-4">🎁</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">Free Trial</h3>
-                <div className="text-4xl font-semibold text-gray-900 mb-3">28 days</div>
+                <div className="text-4xl font-semibold text-gray-900 mb-3">1 month</div>
                 <p className="text-gray-600">Full access, no credit card</p>
               </div>
               <ul className="space-y-4 text-sm text-gray-700">
