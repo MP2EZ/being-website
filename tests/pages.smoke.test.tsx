@@ -32,7 +32,6 @@ const pages: readonly Page[] = [
   { name: 'crisis',             load: () => import('@/app/crisis/page'),                   requires: ['988', 'Crisis Lifeline'] },
   { name: 'hipaa',              load: () => import('@/app/hipaa/page'),                    requires: ['NOT a HIPAA Covered Entity'] },
   { name: 'california-privacy', load: () => import('@/app/privacy/california/page'),       requires: ['CCPA'] },
-  { name: 'privacy-practices',  load: () => import('@/app/privacy-practices/page'),        requires: [] },
   { name: 'accessibility',      load: () => import('@/app/accessibility/page'),            requires: ['WCAG'] },
   { name: 'disclaimers',        load: () => import('@/app/disclaimers/page'),              requires: ['medical'] },
   { name: 'do-not-sell',        load: () => import('@/app/do-not-sell/page'),              requires: ['Do Not Sell'] },
