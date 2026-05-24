@@ -37,11 +37,6 @@ export default function Footer() {
                   Terms of Service
                 </Link>
               </li>
-              <li>
-                <Link href="/hipaa" className="text-gray-400 hover:text-white transition-colors">
-                  HIPAA Notice
-                </Link>
-              </li>
             </ul>
           </div>
 
