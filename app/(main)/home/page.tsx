@@ -126,7 +126,7 @@ export default function Home() {
                 Privacy
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                HIPAA-level encryption. All data stored locally on your device. We never sell your information. Your mental health data belongs to you.
+                AES-256 encryption. All data stored locally on your device. We never sell your information. Your mental health data belongs to you.
               </p>
               <div>
                 <Link

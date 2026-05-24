@@ -1,7 +1,7 @@
 /**
  * Features Page - Being app capabilities
  * Professional SaaS Design
- * Showcases daily check-ins, clinical tools, crisis support, privacy
+ * Showcases daily check-ins, wellness self-assessments, crisis support, privacy
  */
 
 import BrainIcon from '@/components/shared/BrainIcon';
@@ -21,7 +21,7 @@ export default function FeaturesPage() {
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
             Being combines ancient Stoic wisdom with modern mental health science. Daily check-ins,
-            clinical assessments, and crisis support—all with HIPAA-level privacy.
+            wellness self-assessments, and crisis support, with privacy-first design and AES-256 encryption.
           </p>
         </div>
       </section>
@@ -242,7 +242,7 @@ export default function FeaturesPage() {
               Privacy & Security
             </h2>
             <p className="mt-6 text-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
-              Your mental health data is yours. We protect it with HIPAA-level encryption
+              Your mental health data is yours. We protect it with AES-256 encryption
               and local-first storage.
             </p>
           </div>
