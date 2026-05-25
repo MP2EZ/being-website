@@ -12,6 +12,13 @@ import { usePathname } from 'next/navigation';
 export default function MobileBottomTabs() {
   const pathname = usePathname();
 
+  // Suppress on /crisis: the user is already on the crisis resource page and
+  // the other tabs (Home / Philosophy / Features) compete with the in-page
+  // 988 call/text buttons for the same bottom-of-viewport attention zone.
+  // Per AFSP / Zero Suicide digital safety guidance — confirmed by compliance
+  // + UX agent review.
+  if (pathname === '/crisis') return null;
+
   const tabs = [
     { href: '/', label: 'Home', icon: '🏠' },
     { href: '/philosophy', label: 'Philosophy', icon: '📖' },
