@@ -37,6 +37,16 @@ export default function Footer() {
                   Terms of Service
                 </Link>
               </li>
+              <li>
+                <Link href="/privacy/california" className="text-gray-400 hover:text-white transition-colors">
+                  California Privacy Rights
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy/multi-state" className="text-gray-400 hover:text-white transition-colors">
+                  Multi-State Privacy Rights
+                </Link>
+              </li>
             </ul>
           </div>
 
