@@ -14,7 +14,26 @@
 
 @theme inline {
   /* === ALIASES === */
-  /* Map Tailwind conventions to design system naming */
+  /* Map Tailwind conventions to design system naming.
+   *
+   * Tailwind v4 only generates utility classes for tokens registered in this
+   * @theme block. Tokens that only live in :root (from the design system) are
+   * usable via raw var(...) but won't produce bg-* / text-* / border-* utilities.
+   * Every design-system token used as a utility class must be re-declared here.
+   */
+
+  /* Brand colors — design system uses camelCase internals, Tailwind needs kebab */
+  --color-brand-midnight: var(--color-brand-midnight);
+  --color-brand-sage: var(--color-brand-sage);
+  --color-brand-blue-gray: var(--color-brand-blueGray);
+  --color-brand-off-white: var(--color-brand-offWhite);
+
+  /* Accent scale (used directly + via sage-* aliases below) */
+  --color-accent-50: var(--color-accent-50);
+  --color-accent-100: var(--color-accent-100);
+  --color-accent-500: var(--color-accent-500);
+  --color-accent-600: var(--color-accent-600);
+  --color-accent-700: var(--color-accent-700);
 
   /* Sage → Accent (backward compat for existing code) */
   --color-sage-50: var(--color-accent-50);
@@ -37,8 +56,10 @@
   --color-info-bg: var(--color-status-infoBackground);
   --color-critical-bg: var(--color-status-criticalBackground);
 
-  /* Crisis shorthand */
+  /* Crisis colors (shorthand for design system tokens) */
   --color-crisis-bg: var(--color-crisis-background);
+  --color-crisis-text: var(--color-crisis-text);
+  --color-crisis-border: var(--color-crisis-border);
 
   /* Semantic */
   --color-background: var(--background);
