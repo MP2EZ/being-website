@@ -45,7 +45,7 @@ export default function QRCodePlaceholder({ platform, className = '' }: QRCodePl
         </div>
 
         {/* Update instructions overlay (visible in development) */}
-        <div className="absolute inset-0 flex items-center justify-center bg-brand-midnight bg-opacity-90 opacity-0 hover:opacity-100 transition-opacity duration-200">
+        <div className="absolute inset-0 flex items-center justify-center bg-brand-midnight/90 opacity-0 hover:opacity-100 transition-opacity duration-200">
           <div className="text-white text-center p-4 text-sm">
             <p className="font-semibold mb-2">Placeholder QR Code</p>
             <p className="text-xs">

@@ -12,7 +12,7 @@ export default function Footer() {
     <footer className="bg-brand-midnight text-white py-12 px-6 sm:px-8 mb-16 sm:mb-0">
       <div className="max-w-6xl mx-auto">
         {/* Crisis Disclaimer (calm, informative) */}
-        <div className="mb-8 p-4 bg-crisis-bg bg-opacity-10 border border-crisis-border border-opacity-20 rounded-medium">
+        <div className="mb-8 p-4 bg-crisis-bg/10 border border-crisis-border/20 rounded-medium">
           <p className="text-sm text-gray-200">
             <strong>In crisis?</strong> Call{' '}
             <Link href="/crisis" className="underline hover:text-crisis-border">
