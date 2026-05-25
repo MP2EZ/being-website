@@ -4,8 +4,6 @@
  * Tone: Calm, supportive, informative (not alarming)
  */
 
-import BrainIcon from '@/components/shared/BrainIcon';
-
 export default function CrisisPage() {
   return (
     <div className="bg-brand-off-white">
@@ -279,20 +277,6 @@ export default function CrisisPage() {
         </div>
       </section>
 
-      {/* Being Disclaimer */}
-      <section className="px-6 py-16 bg-gray-100">
-        <div className="max-w-4xl mx-auto text-center">
-          <BrainIcon size={48} className="text-brand-midnight mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-brand-midnight mb-4">
-            About Being
-          </h3>
-          <p className="text-gray-700 leading-relaxed max-w-2xl mx-auto">
-            Being is a wellness and mindfulness tool, not a substitute for professional medical
-            care or emergency services. If you're in crisis, please use the resources above.
-            Our app includes 988 access from every screen because your safety is paramount.
-          </p>
-        </div>
-      </section>
     </div>
   );
 }

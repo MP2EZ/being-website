@@ -29,10 +29,11 @@ const pages: readonly Page[] = [
   { name: 'main-privacy',       load: () => import('@/app/(main)/privacy/page'),           requires: ['Privacy'] },
   { name: 'terms',              load: () => import('@/app/(main)/terms/page'),             requires: ['Terms'] },
   { name: 'cookies',            load: () => import('@/app/(main)/cookies/page'),           requires: ['Cookie'] },
-  { name: 'crisis',             load: () => import('@/app/crisis/page'),                   requires: ['988', 'Crisis Lifeline'] },
-  { name: 'california-privacy', load: () => import('@/app/privacy/california/page'),       requires: ['CCPA'] },
-  { name: 'accessibility',      load: () => import('@/app/accessibility/page'),            requires: ['WCAG'] },
-  { name: 'support',            load: () => import('@/app/support/page'),                  requires: [] },
+  { name: 'crisis',             load: () => import('@/app/(main)/crisis/page'),            requires: ['988', 'Crisis Lifeline'] },
+  { name: 'california-privacy', load: () => import('@/app/(main)/privacy/california/page'), requires: ['CCPA'] },
+  { name: 'multi-state-privacy', load: () => import('@/app/(main)/privacy/multi-state/page'), requires: ['Multi-State'] },
+  { name: 'accessibility',      load: () => import('@/app/(main)/accessibility/page'),     requires: ['WCAG'] },
+  { name: 'support',            load: () => import('@/app/(main)/support/page'),           requires: [] },
 ];
 
 describe('page render smoke tests', () => {
