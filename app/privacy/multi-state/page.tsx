@@ -1,4 +1,5 @@
 import { LegalPage } from '@/components/legal/LegalPage';
+import { GpcNotice } from '@/components/legal/GpcNotice';
 import content from '@/content/legal/multi-state-privacy.md';
 
 export const dynamic = 'force-static';
@@ -10,5 +11,5 @@ export const metadata = {
 };
 
 export default function MultiStatePrivacyPage() {
-  return <LegalPage content={content} />;
+  return <LegalPage content={content} banner={<GpcNotice />} />;
 }

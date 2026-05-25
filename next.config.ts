@@ -26,6 +26,12 @@ const securityHeaders = [
       "form-action 'self'",
     ].join("; "),
   },
+  // GPC cache-key safety (INFRA-151) — declared here but overridden by
+  // Next.js's RSC layer (Vary becomes `rsc, next-router-*, Accept-Encoding`).
+  // Kept as intent declaration; relying on Set-Cookie + Cache-Control to
+  // keep GPC-bearing responses out of shared caches. A proper fix requires
+  // an OpenNext Worker middleware to append Vary after Next.js writes it.
+  { key: "Vary", value: "Sec-GPC" },
 ];
 
 const nextConfig: NextConfig = {

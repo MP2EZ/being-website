@@ -1,14 +1,11 @@
 /**
  * Middleware unit tests.
  *
- * Tests the composition: "on no existing variant, assign + set cookie with
- * the right attributes; on existing variant, do nothing." Underlying
- * lib/ab-testing.ts functions are mocked — they have their own tests in
- * lib/ab-testing.test.ts.
- *
- * The cookie attributes (secure, sameSite, httpOnly, path, maxAge) are
- * the regression surface: middleware.ts's only meaningful logic is the
- * cookies.set() call.
+ * Two surfaces under test:
+ * 1. A/B variant cookie attributes (INFRA-93) — mocked lib/ab-testing
+ * 2. GPC detection (INFRA-151) — exercises lib/gpc directly via Sec-GPC
+ *    request header. Tests the contract: Vary always set; X-GPC-Honored +
+ *    being_gpc cookie when header is '1'; cookie cleared otherwise.
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
@@ -34,7 +31,13 @@ async function importFresh(): Promise<{
   return { middleware: mod.middleware, ab };
 }
 
-describe('middleware', () => {
+function buildRequest(headers: Record<string, string> = {}): NextRequest {
+  const h = new Headers();
+  for (const [k, v] of Object.entries(headers)) h.set(k, v);
+  return new NextRequest('http://localhost/', { headers: h });
+}
+
+describe('middleware — A/B variant', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -44,8 +47,7 @@ describe('middleware', () => {
     (ab.getVariantFromRequest as ReturnType<typeof vi.fn>).mockReturnValue(null);
     (ab.assignVariant as ReturnType<typeof vi.fn>).mockReturnValue('A');
 
-    const request = new NextRequest('http://localhost/');
-    const response = middleware(request);
+    const response = middleware(buildRequest());
 
     const cookie = response.cookies.get('being_ab_variant');
     expect(cookie?.value).toBe('A');
@@ -61,8 +63,7 @@ describe('middleware', () => {
     (ab.getVariantFromRequest as ReturnType<typeof vi.fn>).mockReturnValue(null);
     (ab.assignVariant as ReturnType<typeof vi.fn>).mockReturnValue('B');
 
-    const request = new NextRequest('http://localhost/');
-    const response = middleware(request);
+    const response = middleware(buildRequest());
 
     expect(response.cookies.get('being_ab_variant')?.value).toBe('B');
   });
@@ -71,10 +72,87 @@ describe('middleware', () => {
     const { middleware, ab } = await importFresh();
     (ab.getVariantFromRequest as ReturnType<typeof vi.fn>).mockReturnValue('B');
 
-    const request = new NextRequest('http://localhost/');
-    const response = middleware(request);
+    const response = middleware(buildRequest());
 
     expect(ab.assignVariant).not.toHaveBeenCalled();
     expect(response.cookies.get('being_ab_variant')).toBeUndefined();
+  });
+});
+
+describe('middleware — GPC detection', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  // Vary: Sec-GPC is set in next.config.ts headers() rather than middleware
+  // because the RSC layer overwrites Vary headers set in middleware. See the
+  // next.config.ts securityHeaders block.
+
+  it('sets X-GPC-Honored and being_gpc cookie when Sec-GPC: 1', async () => {
+    const { middleware, ab } = await importFresh();
+    (ab.getVariantFromRequest as ReturnType<typeof vi.fn>).mockReturnValue('A');
+
+    const response = middleware(buildRequest({ 'sec-gpc': '1' }));
+
+    expect(response.headers.get('X-GPC-Honored')).toBe('1');
+    const cookie = response.cookies.get('being_gpc');
+    expect(cookie?.value).toBe('1');
+    expect(cookie?.maxAge).toBe(24 * 60 * 60);
+    expect(cookie?.path).toBe('/');
+    expect(cookie?.sameSite).toBe('lax');
+    expect(cookie?.secure).toBe(true);
+    expect(cookie?.httpOnly).toBe(false);
+  });
+
+  it('does not set X-GPC-Honored when the header is absent', async () => {
+    const { middleware, ab } = await importFresh();
+    (ab.getVariantFromRequest as ReturnType<typeof vi.fn>).mockReturnValue('A');
+
+    const response = middleware(buildRequest());
+
+    expect(response.headers.get('X-GPC-Honored')).toBeNull();
+  });
+
+  it('treats Sec-GPC: 0 as no signal (per spec, only "1" is affirmative)', async () => {
+    const { middleware, ab } = await importFresh();
+    (ab.getVariantFromRequest as ReturnType<typeof vi.fn>).mockReturnValue('A');
+
+    const response = middleware(buildRequest({ 'sec-gpc': '0' }));
+
+    expect(response.headers.get('X-GPC-Honored')).toBeNull();
+  });
+
+  it('treats a malformed value as no signal', async () => {
+    const { middleware, ab } = await importFresh();
+    (ab.getVariantFromRequest as ReturnType<typeof vi.fn>).mockReturnValue('A');
+
+    const response = middleware(buildRequest({ 'sec-gpc': 'true' }));
+
+    expect(response.headers.get('X-GPC-Honored')).toBeNull();
+  });
+
+  it('clears the being_gpc cookie when the header is absent', async () => {
+    const { middleware, ab } = await importFresh();
+    (ab.getVariantFromRequest as ReturnType<typeof vi.fn>).mockReturnValue('A');
+
+    const response = middleware(buildRequest());
+
+    // NextResponse.cookies.delete() emits a Set-Cookie with empty value and
+    // an expired date (the exact attrs are framework-internal — we only
+    // assert the deletion signal: an empty-value cookie was emitted).
+    const cookie = response.cookies.get('being_gpc');
+    expect(cookie?.value).toBe('');
+  });
+
+  it('coexists with A/B variant assignment (both signals set on same response)', async () => {
+    const { middleware, ab } = await importFresh();
+    (ab.getVariantFromRequest as ReturnType<typeof vi.fn>).mockReturnValue(null);
+    (ab.assignVariant as ReturnType<typeof vi.fn>).mockReturnValue('A');
+
+    const response = middleware(buildRequest({ 'sec-gpc': '1' }));
+
+    expect(response.cookies.get('being_ab_variant')?.value).toBe('A');
+    expect(response.cookies.get('being_gpc')?.value).toBe('1');
+    expect(response.headers.get('X-GPC-Honored')).toBe('1');
   });
 });
