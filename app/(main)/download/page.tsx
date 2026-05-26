@@ -1,97 +1,47 @@
 /**
- * Download Page - App store links and pricing
- * Professional SaaS Design
- * NOTE: App store badges and QR codes need graphic assets
- * NOTE: Pricing needs verification from product team
+ * Download Page — pre-launch state
+ *
+ * The app isn't in the stores yet. Every existing CTA across the site
+ * routes here, so this page serves as the waitlist signup until launch.
+ * When real app-store badges and downloads are available, the hero +
+ * waitlist form get replaced with badges + QR codes; the supporting
+ * content (pricing, system requirements, FAQ) stays as-is.
  */
 
 import BrainIcon from '@/components/shared/BrainIcon';
-import Button from '@/components/shared/Button';
+import { WaitlistSignupForm } from '@/components/shared/WaitlistSignupForm';
+
+export const metadata = {
+  title: 'Get Early Access | Being',
+  description: 'Join the waitlist to be the first to know when Being launches on iOS and Android.',
+};
 
 export default function DownloadPage() {
   return (
     <div className="bg-white">
-      {/* Hero Section */}
-      <section className="px-6 py-16 sm:py-24 bg-white flex items-center justify-center min-h-[500px] sm:min-h-[600px]">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
+      {/* Hero + waitlist */}
+      <section className="px-6 py-16 sm:py-24 bg-white">
+        <div className="max-w-2xl mx-auto text-center space-y-8">
           <div className="flex justify-center">
             <BrainIcon size={140} className="text-brand-midnight" />
           </div>
           <h1 className="text-5xl sm:text-6xl font-semibold text-brand-midnight leading-tight tracking-tight">
-            Download Being
+            Coming soon to iOS and Android
           </h1>
-          <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-            Start your Stoic Mindfulness practice today. 1 month free trial included.
-            No credit card required.
+          <p className="text-lg sm:text-xl text-gray-600 leading-relaxed">
+            Get early access + a free month trial when we launch. We&rsquo;ll email you the
+            moment Being is in the App Store and Google Play.
           </p>
+          <WaitlistSignupForm />
         </div>
       </section>
 
-      {/* App Store Badges */}
+      {/* What to expect when we launch — Pricing */}
       <section className="px-6 py-20 sm:py-24 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl font-semibold text-gray-900 text-center">
-            Available on iOS and Android
-          </h2>
-
-          <div className="mt-16 sm:mt-20 flex flex-col sm:flex-row items-center justify-center gap-8 mb-12">
-            {/* iOS App Store Badge - PLACEHOLDER */}
-            <div className="bg-white p-8 rounded-large border-2 border-gray-900 w-64 h-32 flex items-center justify-center hover:shadow-lg transition-shadow">
-              <div className="text-center">
-                <div className="text-3xl mb-2">🍎</div>
-                <p className="text-sm text-gray-700 font-medium">iOS App Store Badge</p>
-                <p className="text-xs text-gray-500">(graphic needed)</p>
-              </div>
-            </div>
-
-            {/* Google Play Badge - PLACEHOLDER */}
-            <div className="bg-white p-8 rounded-large border-2 border-gray-900 w-64 h-32 flex items-center justify-center hover:shadow-lg transition-shadow">
-              <div className="text-center">
-                <div className="text-3xl mb-2">🤖</div>
-                <p className="text-sm text-gray-700 font-medium">Google Play Badge</p>
-                <p className="text-xs text-gray-500">(graphic needed)</p>
-              </div>
-            </div>
-          </div>
-
-          {/* QR Codes - PLACEHOLDER */}
-          <div className="bg-white p-10 rounded-large border-2 border-gray-200">
-            <h3 className="text-xl font-semibold text-gray-900 text-center mb-8">
-              Scan to download on your phone
-            </h3>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-12">
-              <div className="text-center">
-                <div className="w-48 h-48 bg-gray-100 rounded-large flex items-center justify-center mb-3 border-2 border-gray-200">
-                  <div>
-                    <div className="text-4xl mb-2">📱</div>
-                    <p className="text-sm text-gray-600">iOS QR Code</p>
-                    <p className="text-xs text-gray-500">(graphic needed)</p>
-                  </div>
-                </div>
-                <p className="text-sm text-gray-900 font-medium">iPhone & iPad</p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-48 h-48 bg-gray-100 rounded-large flex items-center justify-center mb-3 border-2 border-gray-200">
-                  <div>
-                    <div className="text-4xl mb-2">📱</div>
-                    <p className="text-sm text-gray-600">Android QR Code</p>
-                    <p className="text-xs text-gray-500">(graphic needed)</p>
-                  </div>
-                </div>
-                <p className="text-sm text-gray-900 font-medium">Android Devices</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section className="px-6 py-20 sm:py-24 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-4xl sm:text-5xl font-semibold text-gray-900">
-              Simple, Transparent Pricing
+              What to expect when we launch
             </h2>
             <p className="mt-6 text-lg text-gray-600 leading-relaxed">
               No hidden fees. No data selling. Just mindfulness practice with deeper meaning.
@@ -114,7 +64,7 @@ export default function DownloadPage() {
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent-600 mr-2">✓</span>
-                  <span>Daily check-ins & assessments</span>
+                  <span>Daily check-ins &amp; assessments</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent-600 mr-2">✓</span>
@@ -170,7 +120,7 @@ export default function DownloadPage() {
       </section>
 
       {/* System Requirements */}
-      <section className="px-6 py-20 sm:py-24 bg-gray-50">
+      <section className="px-6 py-20 sm:py-24 bg-white">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl sm:text-5xl font-semibold text-gray-900 text-center">
             System Requirements
@@ -181,7 +131,7 @@ export default function DownloadPage() {
             <div className="space-y-6">
               <h3 className="text-xl font-semibold text-gray-900 flex items-center">
                 <span className="text-2xl opacity-60 mr-3">🍎</span>
-                iOS & iPadOS
+                iOS &amp; iPadOS
               </h3>
               <ul className="space-y-4 text-gray-700">
                 <li className="flex items-start">
@@ -241,19 +191,29 @@ export default function DownloadPage() {
       </section>
 
       {/* FAQ */}
-      <section className="px-6 py-20 sm:py-24 bg-white">
+      <section className="px-6 py-20 sm:py-24 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl sm:text-5xl font-semibold text-gray-900 text-center">
-            Download FAQ
+            Frequently asked questions
           </h2>
 
           <div className="mt-20 sm:mt-24 space-y-10">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-900">
+                When will Being launch?
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                We&rsquo;re finalizing app-store review now. Join the waitlist above and we&rsquo;ll
+                email you as soon as Being is available to download.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-gray-900">
                 Do I need to create an account?
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                No account required to start. Being works completely offline with local storage.
+                No account required to start. Being will work completely offline with local storage.
                 You can optionally create an account later for cloud backup across devices.
               </p>
             </div>
@@ -263,7 +223,7 @@ export default function DownloadPage() {
                 What happens after my free trial ends?
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                Nothing automatically. We won't charge you unless you explicitly subscribe. You'll
+                Nothing automatically. We won&rsquo;t charge you unless you explicitly subscribe. You&rsquo;ll
                 keep access to your data, but check-ins and assessments will be limited to view-only.
               </p>
             </div>
@@ -297,30 +257,10 @@ export default function DownloadPage() {
                 Can I cancel my subscription?
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                Yes, anytime. Cancel through your App Store or Google Play account settings. You'll
+                Yes, anytime. Cancel through your App Store or Google Play account settings. You&rsquo;ll
                 keep access until the end of your billing period, and you can always export your data.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="px-6 py-10 sm:py-16 bg-white border-t-2 border-gray-200">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900">
-            Ready to begin?
-          </h2>
-          <p className="mt-6 text-lg text-gray-600 leading-relaxed">
-            Join thousands practicing Stoic Mindfulness. Start your free trial today.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-            <Button href="#" size="large">
-              Download for iOS
-            </Button>
-            <Button href="#" variant="secondary" size="large">
-              Download for Android
-            </Button>
           </div>
         </div>
       </section>

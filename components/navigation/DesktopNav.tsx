@@ -29,7 +29,7 @@ export default function DesktopNav() {
           Features
         </Link>
         <Link href="/download" className="text-brand-midnight hover:text-brand-blue-gray transition-colors">
-          Download
+          Get Early Access
         </Link>
       </div>
 

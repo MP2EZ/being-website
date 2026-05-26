@@ -49,7 +49,11 @@ jobs:
       - name: Build with OpenNext
         run: npx opennextjs-cloudflare build
         env:
-          NEXT_PUBLIC_SHOW_FULL_SITE: ${{ github.ref_name == 'preview' && 'true' || 'false' }}
+          # Always serve the full site (both preview and main). The splash at /
+          # is now unreachable in deployed envs — it stays in the codebase as
+          # an emergency-fallback option but the runtime redirect carries
+          # / → /home. /download serves as the pre-launch waitlist page.
+          NEXT_PUBLIC_SHOW_FULL_SITE: 'true'
 
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
