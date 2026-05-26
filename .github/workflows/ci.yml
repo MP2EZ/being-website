@@ -92,6 +92,10 @@ jobs:
         run: npm ci
 
       - name: Build worker with OpenNext
+        env:
+          # Match the production build mode so the / → /home redirect path
+          # and the rest of the (main) layout behavior is what gets smoked.
+          NEXT_PUBLIC_SHOW_FULL_SITE: 'true'
         run: npx opennextjs-cloudflare build
 
       - name: Start wrangler dev in background
@@ -101,8 +105,9 @@ jobs:
 
       - name: Wait for worker readiness
         run: |
+          # Probe /home (always 200) instead of / (now 307 under SHOW_FULL_SITE=true).
           for i in {1..30}; do
-            if curl -sf -o /dev/null http://localhost:8787/; then
+            if curl -sf -o /dev/null http://localhost:8787/home; then
               echo "Worker ready after ${i} attempt(s)"
               exit 0
             fi
@@ -157,6 +162,63 @@ jobs:
             exit 1
           fi
           echo "GET /crisis smoke + headers smoke passed."
+
+      - name: GET / redirects to /home (production codepath)
+        run: |
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8787/)
+          if [ "$HTTP_CODE" != "307" ] && [ "$HTTP_CODE" != "308" ]; then
+            echo "Expected 307/308 redirect from /, got $HTTP_CODE"
+            exit 1
+          fi
+          LOCATION=$(curl -sI http://localhost:8787/ | grep -i '^location:' | tr -d '\r' | awk '{print $2}')
+          if [ "$LOCATION" != "/home" ]; then
+            echo "Expected location: /home, got '$LOCATION'"
+            exit 1
+          fi
+          echo "GET / redirect smoke passed."
+
+      - name: GET /home renders
+        run: |
+          curl -s -i -o /tmp/home.txt http://localhost:8787/home
+          if ! head -1 /tmp/home.txt | grep -q " 200 "; then
+            echo "Expected HTTP 200 on /home"
+            exit 1
+          fi
+          if ! grep -qi "Mindfulness with meaning" /tmp/home.txt; then
+            echo "Expected 'Mindfulness with meaning' in /home body"
+            exit 1
+          fi
+          echo "GET /home smoke passed."
+
+      - name: GET /download renders pre-launch waitlist
+        run: |
+          curl -s -i -o /tmp/download.txt http://localhost:8787/download
+          if ! head -1 /tmp/download.txt | grep -q " 200 "; then
+            echo "Expected HTTP 200 on /download"
+            exit 1
+          fi
+          if ! grep -qi "Coming soon" /tmp/download.txt; then
+            echo "Expected 'Coming soon' in /download body (pre-launch waitlist marker)"
+            exit 1
+          fi
+          if grep -qi "graphic needed" /tmp/download.txt; then
+            echo "Found 'graphic needed' placeholder text — /download regressed to old badges"
+            exit 1
+          fi
+          echo "GET /download smoke passed."
+
+      - name: GET /privacy/multi-state renders
+        run: |
+          curl -s -i -o /tmp/multistate.txt http://localhost:8787/privacy/multi-state
+          if ! head -1 /tmp/multistate.txt | grep -q " 200 "; then
+            echo "Expected HTTP 200 on /privacy/multi-state"
+            exit 1
+          fi
+          if ! grep -qi "Multi-State" /tmp/multistate.txt; then
+            echo "Expected 'Multi-State' in /privacy/multi-state body"
+            exit 1
+          fi
+          echo "GET /privacy/multi-state smoke passed."
 
       - name: Stop wrangler dev
         if: always()
