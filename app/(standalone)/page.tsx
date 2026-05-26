@@ -1,43 +1,13 @@
 /**
  * Coming Soon Page - Being
  * Single-focus email capture interstitial
- * Launch until app store availability
+ * Shown at / when NEXT_PUBLIC_SHOW_FULL_SITE !== 'true' (see layout)
  */
 
-'use client';
-
-import { useState, FormEvent } from 'react';
 import BrainIcon from '@/components/shared/BrainIcon';
+import { WaitlistSignupForm } from '@/components/shared/WaitlistSignupForm';
 
 export default function ComingSoon() {
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setStatus('submitting');
-    setErrorMessage('');
-
-    try {
-      const response = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to join waitlist');
-      }
-
-      setStatus('success');
-      setEmail('');
-    } catch (error) {
-      setStatus('error');
-      setErrorMessage('Something went wrong. Please try again.');
-    }
-  };
-
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-6">
       <div className="w-full max-w-2xl mx-auto text-center space-y-8">
@@ -58,89 +28,18 @@ export default function ComingSoon() {
           </h1>
 
           <div className="space-y-4">
-            <p className="
-              text-lg sm:text-xl text-gray-600
-              leading-relaxed max-w-2xl mx-auto
-            ">
+            <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
               Ancient Stoic wisdom meets modern mental health practice.
             </p>
 
-            <p className="
-              text-lg sm:text-xl text-gray-600
-              leading-relaxed max-w-md mx-auto
-            ">
+            <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-md mx-auto">
               Be the first to know when we launch.
             </p>
           </div>
         </div>
 
         {/* Email Capture Form */}
-        {status === 'success' ? (
-          <div className="
-            rounded-large border-2 border-accent-500 bg-accent-50
-            px-6 py-8 space-y-2
-          ">
-            <p className="text-lg font-semibold text-accent-700">
-              You're on the list
-            </p>
-            <p className="text-base text-accent-600">
-              We'll notify you as soon as Being launches on the App Store and Google Play.
-            </p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="flex flex-col sm:flex-row gap-3">
-              <label htmlFor="email-input" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email-input"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                required
-                disabled={status === 'submitting'}
-                className="
-                  flex-1 px-4 py-3
-                  rounded-large border-2 border-gray-300
-                  text-base text-gray-900 placeholder:text-gray-400
-                  focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500
-                  disabled:opacity-50 disabled:cursor-not-allowed
-                  transition-all duration-150
-                  min-h-[48px]
-                "
-              />
-              <button
-                type="submit"
-                disabled={status === 'submitting'}
-                className="
-                  px-6 py-3
-                  bg-accent-600 text-white font-medium
-                  rounded-large min-h-[48px]
-                  hover:bg-accent-700 active:bg-accent-700
-                  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500
-                  disabled:opacity-50 disabled:cursor-not-allowed
-                  transition-all duration-150
-                  whitespace-nowrap
-                "
-              >
-                {status === 'submitting' ? 'Joining...' : 'Get Notified'}
-              </button>
-            </div>
-
-            {status === 'error' && (
-              <p className="text-sm text-error" role="alert">
-                {errorMessage}
-              </p>
-            )}
-
-            <p className="text-sm text-gray-500">
-              We'll send you one email when Being launches.
-              No spam, ever. Unsubscribe anytime.
-            </p>
-          </form>
-        )}
+        <WaitlistSignupForm />
 
         {/* Trust Signals */}
         <div className="pt-4 space-y-3">
