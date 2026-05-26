@@ -12,7 +12,7 @@ export default function Footer() {
     <footer className="bg-brand-midnight text-white py-12 px-6 sm:px-8 mb-16 sm:mb-0">
       <div className="max-w-6xl mx-auto">
         {/* Crisis Disclaimer (calm, informative) */}
-        <div className="mb-8 p-4 bg-crisis-bg bg-opacity-10 border border-crisis-border border-opacity-20 rounded-md">
+        <div className="mb-8 p-4 bg-crisis-bg/10 border border-crisis-border/20 rounded-medium">
           <p className="text-sm text-gray-200">
             <strong>In crisis?</strong> Call{' '}
             <Link href="/crisis" className="underline hover:text-crisis-border">
@@ -38,8 +38,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/hipaa" className="text-gray-400 hover:text-white transition-colors">
-                  HIPAA Notice
+                <Link href="/privacy/california" className="text-gray-400 hover:text-white transition-colors">
+                  California Privacy Rights
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy/multi-state" className="text-gray-400 hover:text-white transition-colors">
+                  Multi-State Privacy Rights
                 </Link>
               </li>
             </ul>

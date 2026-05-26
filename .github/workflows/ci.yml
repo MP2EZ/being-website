@@ -1,0 +1,166 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main, preview]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Lint + Tests
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Checkout legal content from being repo
+        uses: actions/checkout@v4
+        with:
+          repository: mp2ez/being
+          ref: development
+          token: ${{ secrets.GH_PACKAGES_TOKEN }}
+          path: .tmp-being
+          sparse-checkout: |
+            docs/legal
+          sparse-checkout-cone-mode: false
+
+      - name: Copy legal files to content directory
+        run: |
+          mkdir -p content/legal
+          cp -r .tmp-being/docs/legal/* content/legal/
+          rm -rf .tmp-being
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Configure npm for GitHub Packages
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PACKAGES_TOKEN }}" >> .npmrc
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+  wrangler-smoke:
+    runs-on: ubuntu-latest
+    name: Wrangler runtime smoke
+    env:
+      NOTION_TOKEN: test-token-not-used
+      NOTION_WAITLIST_DB_ID: test-db-not-used
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Checkout legal content from being repo
+        uses: actions/checkout@v4
+        with:
+          repository: mp2ez/being
+          ref: development
+          token: ${{ secrets.GH_PACKAGES_TOKEN }}
+          path: .tmp-being
+          sparse-checkout: |
+            docs/legal
+          sparse-checkout-cone-mode: false
+
+      - name: Copy legal files to content directory
+        run: |
+          mkdir -p content/legal
+          cp -r .tmp-being/docs/legal/* content/legal/
+          rm -rf .tmp-being
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Configure npm for GitHub Packages
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PACKAGES_TOKEN }}" >> .npmrc
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build worker with OpenNext
+        run: npx opennextjs-cloudflare build
+
+      - name: Start wrangler dev in background
+        run: |
+          npx wrangler dev --port 8787 --local > wrangler.log 2>&1 &
+          echo $! > wrangler.pid
+
+      - name: Wait for worker readiness
+        run: |
+          for i in {1..30}; do
+            if curl -sf -o /dev/null http://localhost:8787/; then
+              echo "Worker ready after ${i} attempt(s)"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Worker did not start; logs:"
+          cat wrangler.log
+          exit 1
+
+      - name: Smoke test /api/waitlist
+        run: |
+          HTTP_CODE=$(curl -s -o /tmp/body -w "%{http_code}" \
+            -X POST http://localhost:8787/api/waitlist \
+            -H "Content-Type: application/json" \
+            -d '{}')
+          echo "Response body:"
+          cat /tmp/body
+          echo
+          if [ "$HTTP_CODE" != "400" ]; then
+            echo "Expected HTTP 400, got $HTTP_CODE"
+            exit 1
+          fi
+          if ! grep -q "Valid email required" /tmp/body; then
+            echo "Expected 'Valid email required' in response body"
+            exit 1
+          fi
+          echo "Smoke test passed."
+
+      - name: GET /crisis renders + security headers present
+        run: |
+          curl -s -i -o /tmp/crisis.txt http://localhost:8787/crisis
+          echo "--- /crisis response headers ---"
+          head -20 /tmp/crisis.txt
+          if ! head -1 /tmp/crisis.txt | grep -q " 200 "; then
+            echo "Expected HTTP 200 on /crisis"
+            exit 1
+          fi
+          if ! grep -qi "988" /tmp/crisis.txt; then
+            echo "Expected '988' in /crisis body"
+            exit 1
+          fi
+          if ! grep -qi "strict-transport-security" /tmp/crisis.txt; then
+            echo "Missing Strict-Transport-Security header"
+            exit 1
+          fi
+          if ! grep -qi "content-security-policy" /tmp/crisis.txt; then
+            echo "Missing Content-Security-Policy header"
+            exit 1
+          fi
+          if ! grep -qi "x-frame-options: DENY" /tmp/crisis.txt; then
+            echo "Missing X-Frame-Options: DENY header"
+            exit 1
+          fi
+          echo "GET /crisis smoke + headers smoke passed."
+
+      - name: Stop wrangler dev
+        if: always()
+        run: |
+          if [ -f wrangler.pid ]; then
+            kill "$(cat wrangler.pid)" 2>/dev/null || true
+          fi

@@ -1,10 +1,15 @@
 /**
- * Next.js Middleware - A/B Testing Variant Assignment
+ * Next.js Middleware
  *
- * Assigns visitors to A/B test variants on first visit.
- * Cookie persisted for 30 days for consistent experience.
+ * Two responsibilities:
+ * 1. A/B testing variant assignment — INFRA-93
+ * 2. Global Privacy Control detection — INFRA-151
+ *    (https://globalprivacycontrol.org/)
  *
- * @see INFRA-93
+ * GPC is treated as authoritative per-request: the `Sec-GPC: 1` header sets
+ * the cookie + `X-GPC-Honored` response header; its absence clears the cookie.
+ * `Vary: Sec-GPC` is set in next.config.ts headers() — the RSC layer
+ * overwrites Vary headers set here, so the cache-key directive lives there.
  */
 
 import { NextResponse } from 'next/server';
@@ -15,39 +20,55 @@ import {
   assignVariant,
   getVariantFromRequest,
 } from '@/lib/ab-testing';
+import {
+  GPC_COOKIE_NAME,
+  GPC_COOKIE_MAX_AGE,
+  GPC_RESPONSE_HEADER,
+  getGpcFromRequest,
+} from '@/lib/gpc';
 
 export function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
-  // Check if variant already assigned
+  // A/B variant assignment (first visit only)
   const existingVariant = getVariantFromRequest(request);
-
   if (!existingVariant) {
-    // Assign new variant
     const variant = assignVariant();
-
-    // Set cookie with 30-day expiry
     response.cookies.set({
       name: AB_COOKIE_NAME,
       value: variant,
       maxAge: AB_COOKIE_MAX_AGE,
       path: '/',
       sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       httpOnly: false, // Accessible to client JS for tracking
     });
-
-    // Log in development
     if (process.env.NODE_ENV === 'development') {
       console.log(`[A/B] New visitor assigned variant: ${variant}`);
     }
   }
 
+  // GPC detection (every request — header is authoritative)
+  if (getGpcFromRequest(request)) {
+    response.cookies.set({
+      name: GPC_COOKIE_NAME,
+      value: '1',
+      maxAge: GPC_COOKIE_MAX_AGE,
+      path: '/',
+      sameSite: 'lax',
+      secure: true,
+      httpOnly: false, // Client reads it to render the GpcNotice
+    });
+    response.headers.set(GPC_RESPONSE_HEADER, '1');
+  } else {
+    response.cookies.delete(GPC_COOKIE_NAME);
+  }
+
   return response;
 }
 
-// Only run on pages that might have A/B variants
-// Excludes API routes, static files, and internal Next.js routes
+// Only run on pages that might have A/B variants or need GPC detection.
+// Excludes API routes, static files, and internal Next.js routes.
 export const config = {
   matcher: [
     /*

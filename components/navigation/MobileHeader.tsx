@@ -20,7 +20,8 @@ export default function MobileHeader() {
       {/* 988 Link (compact for mobile) */}
       <Link
         href="/crisis"
-        className="px-3 py-1.5 text-sm bg-crisis-bg text-crisis-text border border-crisis-border rounded-md"
+        aria-label="988 Crisis Support"
+        className="px-3 py-1.5 text-sm bg-crisis-bg text-crisis-text border border-crisis-border rounded-medium"
       >
         988
       </Link>

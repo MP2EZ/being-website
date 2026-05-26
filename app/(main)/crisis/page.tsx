@@ -4,8 +4,6 @@
  * Tone: Calm, supportive, informative (not alarming)
  */
 
-import BrainIcon from '@/components/shared/BrainIcon';
-
 export default function CrisisPage() {
   return (
     <div className="bg-brand-off-white">
@@ -26,7 +24,7 @@ export default function CrisisPage() {
       {/* 988 Primary CTA - Prominent but Calm */}
       <section className="px-6 py-16">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-crisis-bg border-2 border-crisis-border rounded-lg p-8 sm:p-12">
+          <div className="bg-crisis-bg border-2 border-crisis-border rounded-large p-8 sm:p-12">
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="flex-1">
                 <h2 className="text-3xl font-bold text-brand-midnight mb-4">
@@ -59,13 +57,13 @@ export default function CrisisPage() {
               <div className="flex flex-col gap-4">
                 <a
                   href="tel:988"
-                  className="bg-crisis-border hover:opacity-90 text-white font-bold py-6 px-12 rounded-lg text-center text-2xl transition-opacity"
+                  className="bg-crisis-border hover:opacity-90 text-white font-bold py-6 px-12 rounded-large text-center text-2xl transition-opacity"
                 >
                   📞 Call 988
                 </a>
                 <a
                   href="sms:988"
-                  className="bg-brand-midnight hover:opacity-90 text-white font-bold py-4 px-12 rounded-lg text-center text-lg transition-opacity"
+                  className="bg-brand-midnight hover:opacity-90 text-white font-bold py-4 px-12 rounded-large text-center text-lg transition-opacity"
                 >
                   💬 Text 988
                 </a>
@@ -97,7 +95,7 @@ export default function CrisisPage() {
           </h2>
 
           <div className="space-y-6">
-            <div className="bg-brand-off-white p-6 rounded-lg">
+            <div className="bg-brand-off-white p-6 rounded-large">
               <h3 className="text-xl font-semibold text-brand-midnight mb-3">
                 1. You'll speak with a trained counselor
               </h3>
@@ -108,7 +106,7 @@ export default function CrisisPage() {
               </p>
             </div>
 
-            <div className="bg-brand-off-white p-6 rounded-lg">
+            <div className="bg-brand-off-white p-6 rounded-large">
               <h3 className="text-xl font-semibold text-brand-midnight mb-3">
                 2. Your call is confidential
               </h3>
@@ -118,7 +116,7 @@ export default function CrisisPage() {
               </p>
             </div>
 
-            <div className="bg-brand-off-white p-6 rounded-lg">
+            <div className="bg-brand-off-white p-6 rounded-large">
               <h3 className="text-xl font-semibold text-brand-midnight mb-3">
                 3. You can call for yourself or someone else
               </h3>
@@ -128,7 +126,7 @@ export default function CrisisPage() {
               </p>
             </div>
 
-            <div className="bg-brand-off-white p-6 rounded-lg">
+            <div className="bg-brand-off-white p-6 rounded-large">
               <h3 className="text-xl font-semibold text-brand-midnight mb-3">
                 4. No situation is too small
               </h3>
@@ -150,7 +148,7 @@ export default function CrisisPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Crisis Text Line */}
-            <div className="bg-white p-8 rounded-lg border border-gray-300">
+            <div className="bg-white p-8 rounded-large border border-gray-300">
               <h3 className="text-xl font-semibold text-brand-midnight mb-3">
                 Crisis Text Line
               </h3>
@@ -160,14 +158,14 @@ export default function CrisisPage() {
               </p>
               <a
                 href="sms:741741&body=HOME"
-                className="inline-block bg-brand-sage hover:opacity-90 text-white font-medium py-3 px-6 rounded-lg transition-opacity"
+                className="inline-block bg-brand-sage hover:opacity-90 text-white font-medium py-3 px-6 rounded-large transition-opacity"
               >
                 Text HOME to 741741
               </a>
             </div>
 
             {/* Veterans Crisis Line */}
-            <div className="bg-white p-8 rounded-lg border border-gray-300">
+            <div className="bg-white p-8 rounded-large border border-gray-300">
               <h3 className="text-xl font-semibold text-brand-midnight mb-3">
                 Veterans Crisis Line
               </h3>
@@ -177,14 +175,14 @@ export default function CrisisPage() {
               </p>
               <a
                 href="tel:988"
-                className="inline-block bg-brand-sage hover:opacity-90 text-white font-medium py-3 px-6 rounded-lg transition-opacity"
+                className="inline-block bg-brand-sage hover:opacity-90 text-white font-medium py-3 px-6 rounded-large transition-opacity"
               >
                 Call 988, Press 1
               </a>
             </div>
 
             {/* The Trevor Project (LGBTQ+) */}
-            <div className="bg-white p-8 rounded-lg border border-gray-300">
+            <div className="bg-white p-8 rounded-large border border-gray-300">
               <h3 className="text-xl font-semibold text-brand-midnight mb-3">
                 The Trevor Project (LGBTQ+ Youth)
               </h3>
@@ -194,14 +192,14 @@ export default function CrisisPage() {
               </p>
               <a
                 href="tel:1-866-488-7386"
-                className="inline-block bg-brand-sage hover:opacity-90 text-white font-medium py-3 px-6 rounded-lg transition-opacity"
+                className="inline-block bg-brand-sage hover:opacity-90 text-white font-medium py-3 px-6 rounded-large transition-opacity"
               >
                 Call Trevor Project
               </a>
             </div>
 
             {/* NAMI HelpLine */}
-            <div className="bg-white p-8 rounded-lg border border-gray-300">
+            <div className="bg-white p-8 rounded-large border border-gray-300">
               <h3 className="text-xl font-semibold text-brand-midnight mb-3">
                 NAMI HelpLine
               </h3>
@@ -211,7 +209,7 @@ export default function CrisisPage() {
               </p>
               <a
                 href="tel:1-800-950-6264"
-                className="inline-block bg-brand-sage hover:opacity-90 text-white font-medium py-3 px-6 rounded-lg transition-opacity"
+                className="inline-block bg-brand-sage hover:opacity-90 text-white font-medium py-3 px-6 rounded-large transition-opacity"
               >
                 Call NAMI
               </a>
@@ -223,8 +221,8 @@ export default function CrisisPage() {
       {/* When to Call 911 */}
       <section className="px-6 py-16 bg-white">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-red-50 border-2 border-red-300 rounded-lg p-8">
-            <h2 className="text-2xl font-bold text-red-900 mb-4">
+          <div className="bg-critical-bg border-2 border-critical rounded-large p-8">
+            <h2 className="text-2xl font-bold text-critical mb-4">
               When to call 911 (Emergency)
             </h2>
             <p className="text-gray-800 leading-relaxed mb-4">
@@ -232,23 +230,23 @@ export default function CrisisPage() {
             </p>
             <ul className="space-y-2 text-gray-800">
               <li className="flex items-start">
-                <span className="text-red-600 mr-3">•</span>
+                <span className="text-critical mr-3">•</span>
                 <span>You or someone else has taken action to harm themselves</span>
               </li>
               <li className="flex items-start">
-                <span className="text-red-600 mr-3">•</span>
+                <span className="text-critical mr-3">•</span>
                 <span>There is an immediate medical emergency</span>
               </li>
               <li className="flex items-start">
-                <span className="text-red-600 mr-3">•</span>
+                <span className="text-critical mr-3">•</span>
                 <span>Someone is threatening to harm themselves or others right now</span>
               </li>
               <li className="flex items-start">
-                <span className="text-red-600 mr-3">•</span>
+                <span className="text-critical mr-3">•</span>
                 <span>There is an active life-threatening situation</span>
               </li>
             </ul>
-            <div className="mt-6 pt-6 border-t border-red-300">
+            <div className="mt-6 pt-6 border-t border-critical">
               <p className="text-sm text-gray-700">
                 <strong>Note:</strong> 988 is for crisis support and suicide prevention. 911
                 is for immediate medical emergencies and life-threatening situations.
@@ -279,20 +277,6 @@ export default function CrisisPage() {
         </div>
       </section>
 
-      {/* Being Disclaimer */}
-      <section className="px-6 py-16 bg-gray-100">
-        <div className="max-w-4xl mx-auto text-center">
-          <BrainIcon size={48} className="text-brand-midnight mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-brand-midnight mb-4">
-            About Being
-          </h3>
-          <p className="text-gray-700 leading-relaxed max-w-2xl mx-auto">
-            Being is a wellness and mindfulness tool, not a substitute for professional medical
-            care or emergency services. If you're in crisis, please use the resources above.
-            Our app includes 988 access from every screen because your safety is paramount.
-          </p>
-        </div>
-      </section>
     </div>
   );
 }

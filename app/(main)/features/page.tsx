@@ -1,7 +1,7 @@
 /**
  * Features Page - Being app capabilities
  * Professional SaaS Design
- * Showcases daily check-ins, clinical tools, crisis support, privacy
+ * Showcases daily check-ins, wellness self-assessments, crisis support, privacy
  */
 
 import BrainIcon from '@/components/shared/BrainIcon';
@@ -21,7 +21,7 @@ export default function FeaturesPage() {
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
             Being combines ancient Stoic wisdom with modern mental health science. Daily check-ins,
-            clinical assessments, and crisis support—all with HIPAA-level privacy.
+            wellness self-assessments, and crisis support, with privacy-first design and AES-256 encryption.
           </p>
         </div>
       </section>
@@ -41,7 +41,7 @@ export default function FeaturesPage() {
 
           <div className="mt-20 sm:mt-24 grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20">
             {/* Morning */}
-            <div className="bg-white p-12 rounded-xl shadow-sm">
+            <div className="bg-white p-12 rounded-large shadow-sm">
               <div className="text-3xl opacity-60 mb-6">🌅</div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Morning</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
@@ -69,7 +69,7 @@ export default function FeaturesPage() {
             </div>
 
             {/* Midday */}
-            <div className="bg-white p-12 rounded-xl shadow-sm">
+            <div className="bg-white p-12 rounded-large shadow-sm">
               <div className="text-3xl opacity-60 mb-6">☀️</div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Midday</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
@@ -97,7 +97,7 @@ export default function FeaturesPage() {
             </div>
 
             {/* Evening */}
-            <div className="bg-white p-12 rounded-xl shadow-sm">
+            <div className="bg-white p-12 rounded-large shadow-sm">
               <div className="text-3xl opacity-60 mb-6">🌙</div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Evening</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
@@ -142,7 +142,7 @@ export default function FeaturesPage() {
 
           <div className="mt-20 sm:mt-24 grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
             {/* PHQ-9 */}
-            <div className="bg-gray-50 p-12 rounded-xl shadow-sm">
+            <div className="bg-gray-50 p-12 rounded-large shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">PHQ-9 (Depression)</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
                 The Patient Health Questionnaire-9 is a widely-used self-assessment questionnaire
@@ -169,7 +169,7 @@ export default function FeaturesPage() {
             </div>
 
             {/* GAD-7 */}
-            <div className="bg-gray-50 p-12 rounded-xl shadow-sm">
+            <div className="bg-gray-50 p-12 rounded-large shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">GAD-7 (Anxiety)</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
                 The Generalized Anxiety Disorder-7 scale helps you monitor anxiety symptoms over time.
@@ -210,7 +210,7 @@ export default function FeaturesPage() {
             </p>
           </div>
 
-          <div className="mt-12 bg-info text-white p-10 rounded-xl">
+          <div className="mt-12 bg-info text-white p-10 rounded-large">
             <h3 className="text-2xl font-semibold mb-4">988 Suicide & Crisis Lifeline</h3>
             <p className="text-lg leading-relaxed mb-6 text-blue-100">
               One tap to connect with trained crisis counselors. Available 24/7/365.
@@ -242,7 +242,7 @@ export default function FeaturesPage() {
               Privacy & Security
             </h2>
             <p className="mt-6 text-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
-              Your mental health data is yours. We protect it with HIPAA-level encryption
+              Your mental health data is yours. We protect it with AES-256 encryption
               and local-first storage.
             </p>
           </div>
@@ -291,7 +291,7 @@ export default function FeaturesPage() {
           </h2>
           <p className="mt-6 text-lg text-gray-600 leading-relaxed">
             Experience Stoic Mindfulness with evidence-based self-monitoring tools.
-            Start your 28-day free trial today.
+            Start your 1 month free trial today.
           </p>
           <div className="mt-8">
             <Button href="/download" size="large">

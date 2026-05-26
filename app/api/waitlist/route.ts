@@ -7,22 +7,35 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getVariant, trackConversion, type Variant } from '@/lib/ab-testing';
+import { z } from 'zod';
+import { getVariant, trackConversion } from '@/lib/ab-testing';
 
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
 const NOTION_DATABASE_ID = process.env.NOTION_WAITLIST_DB_ID;
 
-export async function POST(request: NextRequest) {
-  try {
-    const { email } = await request.json();
+const BodySchema = z.object({
+  email: z.string().email(),
+});
 
-    // Validate email
-    if (!email || !email.includes('@')) {
+export async function POST(request: NextRequest) {
+  // Parse body separately so malformed JSON is a 400 (client error),
+  // not a 500 conflated with upstream/Notion failures.
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
+  }
+
+  try {
+    const parsed = BodySchema.safeParse(body);
+    if (!parsed.success) {
       return NextResponse.json(
         { error: 'Valid email required' },
         { status: 400 }
       );
     }
+    const { email } = parsed.data;
 
     // Validate environment variables
     if (!NOTION_TOKEN || !NOTION_DATABASE_ID) {

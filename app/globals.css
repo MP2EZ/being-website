@@ -14,7 +14,26 @@
 
 @theme inline {
   /* === ALIASES === */
-  /* Map Tailwind conventions to design system naming */
+  /* Map Tailwind conventions to design system naming.
+   *
+   * Tailwind v4 only generates utility classes for tokens registered in this
+   * @theme block. Tokens that only live in :root (from the design system) are
+   * usable via raw var(...) but won't produce bg-* / text-* / border-* utilities.
+   * Every design-system token used as a utility class must be re-declared here.
+   */
+
+  /* Brand colors — design system uses camelCase internals, Tailwind needs kebab */
+  --color-brand-midnight: var(--color-brand-midnight);
+  --color-brand-sage: var(--color-brand-sage);
+  --color-brand-blue-gray: var(--color-brand-blueGray);
+  --color-brand-off-white: var(--color-brand-offWhite);
+
+  /* Accent scale (used directly + via sage-* aliases below) */
+  --color-accent-50: var(--color-accent-50);
+  --color-accent-100: var(--color-accent-100);
+  --color-accent-500: var(--color-accent-500);
+  --color-accent-600: var(--color-accent-600);
+  --color-accent-700: var(--color-accent-700);
 
   /* Sage → Accent (backward compat for existing code) */
   --color-sage-50: var(--color-accent-50);
@@ -28,9 +47,19 @@
   --color-warning: var(--color-status-warning);
   --color-error: var(--color-status-error);
   --color-info: var(--color-status-info);
+  --color-critical: var(--color-status-critical);
 
-  /* Crisis shorthand */
+  /* Status backgrounds */
+  --color-success-bg: var(--color-status-successBackground);
+  --color-warning-bg: var(--color-status-warningBackground);
+  --color-error-bg: var(--color-status-errorBackground);
+  --color-info-bg: var(--color-status-infoBackground);
+  --color-critical-bg: var(--color-status-criticalBackground);
+
+  /* Crisis colors (shorthand for design system tokens) */
   --color-crisis-bg: var(--color-crisis-background);
+  --color-crisis-text: var(--color-crisis-text);
+  --color-crisis-border: var(--color-crisis-border);
 
   /* Semantic */
   --color-background: var(--background);
@@ -98,42 +127,48 @@ body {
   animation: fadeInUp 0.3s ease-out;
 }
 
-/* === LEGAL CONTENT === */
+/* === LEGAL CONTENT ===
+ * Typography uses DS 1.8 tokens (--text-* / --spacing-* / --radius-*).
+ * Two intentional overrides on top of the DS scale:
+ *   - h2 weight stays 700 (DS headline4 is 600) for stronger section breaks
+ *   - p line-height stays 1.75 (DS bodyRegular is 1.5) for airier legal reading
+ */
 .legal-content h1 {
-  font-size: 2.25rem;
-  font-weight: 700;
+  font-size: var(--text-headline1-size);
+  font-weight: var(--text-headline1-weight);
+  letter-spacing: var(--text-headline1-tracking);
   color: var(--color-brand-midnight);
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-16);
   text-align: center;
 }
 
 .legal-content h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: var(--text-headline4-size);
+  font-weight: 700; /* DS headline4 is 600; legal pages want stronger separation */
   color: var(--color-brand-midnight);
-  margin-top: 3rem;
-  margin-bottom: 1rem;
+  margin-top: var(--spacing-48);
+  margin-bottom: var(--spacing-16);
 }
 
 .legal-content h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: var(--text-title-size);
+  font-weight: var(--text-title-weight);
   color: var(--color-brand-midnight);
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
+  margin-top: var(--spacing-32);
+  margin-bottom: var(--spacing-12);
 }
 
 .legal-content p {
   color: var(--color-gray-700);
-  line-height: 1.75;
-  margin-bottom: 1rem;
+  line-height: 1.75; /* DS bodyRegular is 1.5; legal pages want extra airiness */
+  margin-bottom: var(--spacing-16);
 }
 
 .legal-content ul,
 .legal-content ol {
   color: var(--color-gray-700);
-  margin-bottom: 1rem;
-  margin-left: 1.5rem;
+  margin-bottom: var(--spacing-16);
+  margin-left: var(--spacing-24);
 }
 
 .legal-content ul {
@@ -145,7 +180,7 @@ body {
 }
 
 .legal-content li {
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-8);
 }
 
 .legal-content a {
@@ -165,37 +200,37 @@ body {
 .legal-content blockquote {
   border-left: 4px solid var(--color-brand-sage);
   background-color: white;
-  padding: 1rem;
-  margin: 1.5rem 0;
-  border-radius: 0 0.5rem 0.5rem 0;
+  padding: var(--spacing-16);
+  margin: var(--spacing-24) 0;
+  border-radius: 0 var(--radius-medium) var(--radius-medium) 0;
 }
 
 .legal-content hr {
-  margin: 2rem 0;
+  margin: var(--spacing-32) 0;
   border-color: var(--color-gray-300);
 }
 
 .legal-content table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--spacing-24);
   border: 1px solid var(--color-gray-300);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-medium);
   overflow: hidden;
 }
 
 .legal-content th {
   background-color: var(--color-gray-50);
-  padding: 0.75rem 1rem;
+  padding: var(--spacing-12) var(--spacing-16);
   text-align: left;
-  font-size: 0.875rem;
+  font-size: var(--text-bodySmall-size);
   font-weight: 600;
   color: var(--color-brand-midnight);
 }
 
 .legal-content td {
-  padding: 0.75rem 1rem;
-  font-size: 0.875rem;
+  padding: var(--spacing-12) var(--spacing-16);
+  font-size: var(--text-bodySmall-size);
   color: var(--color-gray-700);
   border-top: 1px solid var(--color-gray-200);
 }

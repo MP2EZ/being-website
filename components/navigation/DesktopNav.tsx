@@ -29,14 +29,14 @@ export default function DesktopNav() {
           Features
         </Link>
         <Link href="/download" className="text-brand-midnight hover:text-brand-blue-gray transition-colors">
-          Download
+          Get Early Access
         </Link>
       </div>
 
       {/* 988 Crisis Button (calm styling, not alarm) */}
       <Link
         href="/crisis"
-        className="px-4 py-2 bg-crisis-bg text-crisis-text border border-crisis-border rounded-md hover:bg-opacity-80 transition-all"
+        className="px-4 py-2 bg-crisis-bg text-crisis-text border border-crisis-border rounded-medium hover:bg-crisis-bg/80 transition-all"
       >
         988 Crisis Support
       </Link>

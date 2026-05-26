@@ -15,6 +15,14 @@ export default function MainLayout({
 }) {
   return (
     <>
+      {/* Skip to main content (WCAG 2.4.1 Bypass Blocks) */}
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-brand-midnight focus:text-white focus:rounded-medium focus:outline-2 focus:outline-offset-2 focus:outline-[var(--color-accessibility-focus-outline)]"
+      >
+        Skip to main content
+      </a>
+
       {/* Desktop Navigation (hidden on mobile) */}
       <DesktopNav />
 
@@ -22,7 +30,7 @@ export default function MainLayout({
       <MobileHeader />
 
       {/* Main Content */}
-      <main className="min-h-screen">
+      <main id="main" tabIndex={-1} className="min-h-screen">
         {children}
       </main>
 
