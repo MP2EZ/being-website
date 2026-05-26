@@ -10,10 +10,10 @@ jobs:
     name: Lint + Tests
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Checkout legal content from being repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: mp2ez/being
           ref: development
@@ -30,7 +30,7 @@ jobs:
           rm -rf .tmp-being
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -59,10 +59,10 @@ jobs:
       NOTION_WAITLIST_DB_ID: test-db-not-used
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Checkout legal content from being repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: mp2ez/being
           ref: development
@@ -79,7 +79,7 @@ jobs:
           rm -rf .tmp-being
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
