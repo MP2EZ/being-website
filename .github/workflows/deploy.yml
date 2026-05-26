@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Checkout legal content from being repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: mp2ez/being
           ref: development
@@ -34,7 +34,7 @@ jobs:
           rm -rf .tmp-being
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -56,8 +56,35 @@ jobs:
           NEXT_PUBLIC_SHOW_FULL_SITE: 'true'
 
       - name: Deploy to Cloudflare Workers
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy ${{ github.ref_name == 'preview' && '--env preview' || '' }}
+
+      - name: Post-deploy smoke against live URL
+        run: |
+          URL="${{ github.ref_name == 'main' && 'https://being.fyi' || 'https://being-website-preview.palouselabs.workers.dev' }}"
+          echo "Smoke testing $URL ..."
+          # Brief wait for Cloudflare edge propagation after deploy
+          sleep 15
+          # Cache-bust query param to avoid stale edge responses
+          CB="?cb=$(date +%s)"
+          # /home must return 200
+          HOME_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$URL/home$CB")
+          if [ "$HOME_CODE" != "200" ]; then
+            echo "FAIL: $URL/home returned $HOME_CODE (expected 200)"
+            exit 1
+          fi
+          # /download must contain pre-launch marker (update at app launch)
+          if ! curl -sf "$URL/download$CB" | grep -q "Coming soon"; then
+            echo "FAIL: $URL/download body missing 'Coming soon' marker"
+            exit 1
+          fi
+          # /privacy must serve security headers (HSTS proves the security
+          # headers pipeline is intact end-to-end through Cloudflare)
+          if ! curl -sI "$URL/privacy" | grep -qi "strict-transport-security"; then
+            echo "FAIL: $URL/privacy missing Strict-Transport-Security header"
+            exit 1
+          fi
+          echo "Post-deploy smoke passed for $URL"
