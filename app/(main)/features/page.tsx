@@ -1,7 +1,12 @@
 /**
  * Features Page - Being app capabilities
  * Professional SaaS Design
- * Showcases daily check-ins, wellness self-assessments, crisis support, privacy
+ * Showcases daily check-ins, mood/wellbeing reflection tools, crisis-resource
+ * access, and privacy-first design.
+ *
+ * Copy is intentionally consumer-wellness register (not clinical). The
+ * page uses PHQ-9 and GAD-7 self-reflection tools but does NOT make
+ * detection or diagnostic claims — Being is not a SaMD.
  */
 
 import BrainIcon from '@/components/shared/BrainIcon';
@@ -20,8 +25,9 @@ export default function FeaturesPage() {
             App Features
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-            Being combines ancient Stoic wisdom with modern mental health science. Daily check-ins,
-            wellness self-assessments, and crisis support, with privacy-first design and AES-256 encryption.
+            Being combines ancient Stoic wisdom with modern wellbeing research. Daily check-ins,
+            mood and anxiety reflection tools, and crisis-resource access, with privacy-first
+            design and AES-256 encryption.
           </p>
         </div>
       </section>
@@ -127,26 +133,27 @@ export default function FeaturesPage() {
         </div>
       </section>
 
-      {/* Mental Health Self-Monitoring */}
+      {/* Mood & Wellbeing Tracking */}
       <section className="px-6 py-20 sm:py-24 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-4xl sm:text-5xl font-semibold text-gray-900">
-              Mental Health Self-Monitoring
+              Mood &amp; Wellbeing Tracking
             </h2>
             <p className="mt-6 text-lg text-gray-600 leading-relaxed">
-              Standardized self-assessments help you track your mental health patterns over time.
-              All data encrypted and stored locally on your device.
+              Research-based reflection tools help you track your mood and wellbeing patterns
+              over time. All data encrypted and stored locally on your device.
             </p>
           </div>
 
           <div className="mt-20 sm:mt-24 grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
             {/* PHQ-9 */}
             <div className="bg-gray-50 p-12 rounded-large shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">PHQ-9 (Depression)</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">PHQ-9 Mood Self-Assessment</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
-                The Patient Health Questionnaire-9 is a widely-used self-assessment questionnaire
-                for monitoring depression symptoms. Being uses exact PHQ-9 wording and scoring.
+                The Patient Health Questionnaire-9 is a widely-used self-reflection tool for
+                tracking mood patterns over time. Being uses the standard PHQ-9 wording so your
+                self-reported scores stay consistent, letting you track your own patterns.
               </p>
               <ul className="space-y-4 text-sm text-gray-700">
                 <li className="flex items-start">
@@ -159,21 +166,21 @@ export default function FeaturesPage() {
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent-600 mr-2">✓</span>
-                  <span>Auto-detects severe depression (PHQ-9 ≥20)</span>
+                  <span>Flags elevated scores (PHQ-9 ≥20) and surfaces crisis resources</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent-600 mr-2">✓</span>
-                  <span>Crisis support triggered automatically</span>
+                  <span>Always one tap from 988 and Crisis Text Line</span>
                 </li>
               </ul>
             </div>
 
             {/* GAD-7 */}
             <div className="bg-gray-50 p-12 rounded-large shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">GAD-7 (Anxiety)</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">GAD-7 Anxiety Self-Assessment</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
-                The Generalized Anxiety Disorder-7 scale helps you monitor anxiety symptoms over time.
-                Self-assessment tool with standardized scoring.
+                The Generalized Anxiety Disorder-7 scale is a widely-used self-reflection tool
+                for tracking anxious thought and feeling patterns over time.
               </p>
               <ul className="space-y-4 text-sm text-gray-700">
                 <li className="flex items-start">
@@ -182,15 +189,15 @@ export default function FeaturesPage() {
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent-600 mr-2">✓</span>
-                  <span>Monitor anxiety trends</span>
+                  <span>Track anxious feelings over time</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent-600 mr-2">✓</span>
-                  <span>Auto-detects severe anxiety (GAD-7 ≥15)</span>
+                  <span>Flags elevated scores (GAD-7 ≥15) and surfaces crisis resources</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent-600 mr-2">✓</span>
-                  <span>Integrated with crisis protocols</span>
+                  <span>Always one tap from 988 and Crisis Text Line</span>
                 </li>
               </ul>
             </div>
@@ -203,27 +210,27 @@ export default function FeaturesPage() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center">
             <h2 className="text-4xl sm:text-5xl font-semibold text-gray-900">
-              24/7 Crisis Support
+              24/7 Crisis Resource Access
             </h2>
             <p className="mt-6 text-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
               Your safety is our top priority. Immediate access to crisis resources from every screen.
             </p>
           </div>
 
-          <div className="mt-12 bg-info text-white p-10 rounded-large">
-            <h3 className="text-2xl font-semibold mb-4">988 Suicide & Crisis Lifeline</h3>
-            <p className="text-lg leading-relaxed mb-6 text-blue-100">
-              One tap to connect with trained crisis counselors. Available 24/7/365.
-              Completely confidential.
+          <div className="mt-12 bg-crisis-bg text-crisis-text border border-crisis-border p-10 rounded-large">
+            <h3 className="text-2xl font-semibold mb-4">988 Suicide &amp; Crisis Lifeline</h3>
+            <p className="text-lg leading-relaxed mb-6">
+              Call <strong>988</strong> or text <strong>HOME</strong> to <strong>741741</strong> to
+              connect with trained crisis counselors. Available 24/7/365. Completely confidential.
             </p>
-            <div className="space-y-3 text-blue-100">
+            <div className="space-y-3">
               <p className="flex items-start">
                 <span className="mr-2">✓</span>
                 <span>Less than 3 seconds from any screen to 988</span>
               </p>
               <p className="flex items-start">
                 <span className="mr-2">✓</span>
-                <span>Auto-triggered on PHQ-9 ≥20 or GAD-7 ≥15</span>
+                <span>Surfaced immediately when self-assessment scores are elevated</span>
               </p>
               <p className="flex items-start">
                 <span className="mr-2">✓</span>
@@ -239,10 +246,10 @@ export default function FeaturesPage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center">
             <h2 className="text-4xl sm:text-5xl font-semibold text-gray-900">
-              Privacy & Security
+              Privacy &amp; Security
             </h2>
             <p className="mt-6 text-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
-              Your mental health data is yours. We protect it with AES-256 encryption
+              Your wellbeing data is yours. We protect it with AES-256 encryption
               and local-first storage.
             </p>
           </div>
@@ -259,7 +266,7 @@ export default function FeaturesPage() {
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-900">AES-256 Encryption</h3>
               <p className="text-gray-600 leading-relaxed">
-                Military-grade encryption protects your check-ins, assessments, and journal entries.
+                AES-256 encryption protects your check-ins, self-assessments, and journal entries.
                 Even if your device is compromised, your data remains secure.
               </p>
             </div>
@@ -267,7 +274,7 @@ export default function FeaturesPage() {
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-900">No Data Selling</h3>
               <p className="text-gray-600 leading-relaxed">
-                We don't sell, share, or monetize your mental health data. Ever.
+                We don't sell, share, or monetize your wellbeing data. Ever.
                 Your privacy is not for sale.
               </p>
             </div>
@@ -290,7 +297,7 @@ export default function FeaturesPage() {
             Ready to begin?
           </h2>
           <p className="mt-6 text-lg text-gray-600 leading-relaxed">
-            Experience Stoic Mindfulness with evidence-based self-monitoring tools.
+            Experience Stoic Mindfulness with research-based self-reflection tools.
             Start your 1 month free trial today.
           </p>
           <div className="mt-8">
