@@ -37,6 +37,10 @@ export function PosthogProvider() {
         persistence: 'cookie',
         opt_out_capturing_by_default: false,
         loaded: (ph) => {
+          // Tag every event with the surface so the website's data stays
+          // distinguishable from the being-app's data in the shared PostHog
+          // project. The app mirrors this with posthog.register({ surface: 'app' }).
+          ph.register({ surface: 'web' });
           window.__posthog = ph as unknown as NonNullable<Window['__posthog']>;
         },
       });
