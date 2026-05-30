@@ -7,6 +7,7 @@ import DesktopNav from "@/components/navigation/DesktopNav";
 import MobileHeader from "@/components/navigation/MobileHeader";
 import MobileBottomTabs from "@/components/navigation/MobileBottomTabs";
 import Footer from "@/components/navigation/Footer";
+import { AnalyticsGate } from "@/components/analytics/AnalyticsGate";
 
 export default function MainLayout({
   children,
@@ -39,6 +40,9 @@ export default function MainLayout({
 
       {/* Mobile Bottom Tabs (hidden on desktop) */}
       <MobileBottomTabs />
+
+      {/* PostHog analytics — gated by GPC / config / SSR-safe-default */}
+      <AnalyticsGate />
     </>
   );
 }
