@@ -4,17 +4,30 @@
  * Waitlist signup form.
  *
  * Used on:
- *   - / (splash) when NEXT_PUBLIC_SHOW_FULL_SITE !== 'true'
- *   - /download (pre-launch state until the app is in the stores)
+ *   - / (splash) when NEXT_PUBLIC_SHOW_FULL_SITE !== 'true'  (source='splash')
+ *   - /download (pre-launch state until the app is in the stores) (source='download')
  *
  * POSTs to the existing /api/waitlist endpoint (Notion-backed).
  * Self-contained: idle / submitting / success / error states are
  * managed internally.
+ *
+ * Fires PostHog events on success/failure (no-op when PostHog isn't loaded
+ * — e.g., GPC kill, missing key). See lib/posthog/events.ts.
  */
 
 import { useState, FormEvent } from 'react';
+import {
+  trackWaitlistSubmitted,
+  trackWaitlistFailed,
+  type WaitlistSource,
+} from '@/lib/posthog/events';
 
-export function WaitlistSignupForm() {
+interface WaitlistSignupFormProps {
+  /** Where on the site this form instance lives — flows through to PostHog events. */
+  source: WaitlistSource;
+}
+
+export function WaitlistSignupForm({ source }: WaitlistSignupFormProps) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
@@ -32,12 +45,15 @@ export function WaitlistSignupForm() {
       });
 
       if (!response.ok) {
+        trackWaitlistFailed({ source, reason: `http_${response.status}` });
         throw new Error('Failed to join waitlist');
       }
 
+      trackWaitlistSubmitted({ source });
       setStatus('success');
       setEmail('');
     } catch {
+      trackWaitlistFailed({ source, reason: 'network_error' });
       setStatus('error');
       setErrorMessage('Something went wrong. Please try again.');
     }

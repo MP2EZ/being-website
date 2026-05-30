@@ -39,7 +39,7 @@ export default function ComingSoon() {
         </div>
 
         {/* Email Capture Form */}
-        <WaitlistSignupForm />
+        <WaitlistSignupForm source="splash" />
 
         {/* Trust Signals */}
         <div className="pt-4 space-y-3">

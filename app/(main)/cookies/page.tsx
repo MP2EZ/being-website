@@ -20,7 +20,7 @@ export default function CookiesPage() {
             Cookie Policy
           </h1>
           <p className="text-gray-700">
-            <strong>Last Updated:</strong> May 25, 2026
+            <strong>Last Updated:</strong> May 30, 2026
           </p>
         </header>
 
@@ -28,16 +28,18 @@ export default function CookiesPage() {
           {/* Summary */}
           <section className="bg-green-50 p-8 rounded-large border-2 border-green-400 mb-8">
             <h2 className="text-2xl font-bold text-green-900 mb-4">
-              First-Party Functional Cookies Only
+              Two Functional Cookies + Privacy-Respecting Analytics
             </h2>
             <p className="text-gray-800 leading-relaxed mb-4">
               Being&rsquo;s website (<strong>www.being.fyi</strong>) uses two small first-party
-              cookies for site functionality. We don&rsquo;t use third-party advertising or analytics
-              cookies, tracking pixels, or cross-site trackers.
+              cookies for site functionality, plus PostHog product analytics (EU cloud) scoped
+              tightly to pageviews and waitlist signup events. No advertising trackers, no
+              session replay, no autocapture, no cross-site profiling.
             </p>
             <p className="text-gray-800 leading-relaxed">
-              We honor the <strong>Global Privacy Control (Sec-GPC)</strong> signal automatically — no
-              banner, no preference center.
+              We honor the <strong>Global Privacy Control (Sec-GPC)</strong> signal automatically — when
+              your browser sends it, PostHog does not load, no analytics cookie is set, and no
+              event is transmitted. No banner, no preference center.
             </p>
           </section>
 
@@ -61,12 +63,25 @@ export default function CookiesPage() {
             <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-2">
               <code className="bg-gray-100 px-2 py-1 rounded text-base">being_gpc</code>
             </h3>
-            <ul className="space-y-2 text-gray-700">
+            <ul className="space-y-2 text-gray-700 mb-6">
               <li><strong>Purpose:</strong> Caches the Global Privacy Control signal so the page can display an acknowledgement.</li>
               <li><strong>Type:</strong> First-party functional.</li>
               <li><strong>Value:</strong> <code>1</code> when your browser sends <code>Sec-GPC: 1</code>; otherwise the cookie is cleared.</li>
               <li><strong>Lifetime:</strong> 24 hours; automatically cleared on any subsequent request that doesn&rsquo;t carry the header.</li>
               <li><strong>Shared with third parties:</strong> No.</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-2">
+              <code className="bg-gray-100 px-2 py-1 rounded text-base">ph_*</code> (PostHog)
+            </h3>
+            <ul className="space-y-2 text-gray-700">
+              <li><strong>Purpose:</strong> Anonymous product analytics — pageviews and waitlist signup events only. Helps us understand which marketing pages drive waitlist signups.</li>
+              <li><strong>Type:</strong> Third-party analytics (PostHog Inc., EU data residency — Frankfurt).</li>
+              <li><strong>Value:</strong> A random distinct identifier (no email, no name, no PII).</li>
+              <li><strong>Lifetime:</strong> 365 days (PostHog default).</li>
+              <li><strong>Shared with third parties:</strong> Yes, with PostHog. No further onward sharing or sale.</li>
+              <li><strong>Not set when GPC is detected.</strong> If your browser sends <code>Sec-GPC: 1</code> or exposes <code>navigator.globalPrivacyControl === true</code>, PostHog does not load and no <code>ph_*</code> cookie is set. See <em>Global Privacy Control</em> section below.</li>
+              <li><strong>What we do NOT capture:</strong> No autocapture (no recording of all clicks/forms), no session replay, no heatmaps, no raw email or other PII. See our <a href="/privacy" className="text-accent-600 hover:underline font-medium">Privacy Policy §5.2</a> for the full web-analytics scope.</li>
             </ul>
           </section>
 
@@ -82,7 +97,7 @@ export default function CookiesPage() {
               </li>
               <li className="flex items-start">
                 <span className="text-red-600 mr-2">✗</span>
-                <span><strong>No Analytics Cookies:</strong> No Google Analytics, PostHog, Mixpanel, or similar.</span>
+                <span><strong>No Google Analytics, Mixpanel, Amplitude, or Segment.</strong> We use PostHog (disclosed above) for pageviews + waitlist conversion events only — no other analytics vendors.</span>
               </li>
               <li className="flex items-start">
                 <span className="text-red-600 mr-2">✗</span>
@@ -90,11 +105,15 @@ export default function CookiesPage() {
               </li>
               <li className="flex items-start">
                 <span className="text-red-600 mr-2">✗</span>
-                <span><strong>No Third-Party Cookies:</strong> No external services set cookies on our pages.</span>
+                <span><strong>No Cross-Site Tracking Cookies:</strong> No advertising network cookies that follow you across the web.</span>
               </li>
               <li className="flex items-start">
                 <span className="text-red-600 mr-2">✗</span>
-                <span><strong>No Fingerprinting or Session Replay:</strong> No FullStory, LogRocket, Hotjar, or similar.</span>
+                <span><strong>No Fingerprinting or Session Replay:</strong> No FullStory, LogRocket, Hotjar, or similar. PostHog session replay is explicitly disabled in our configuration.</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-red-600 mr-2">✗</span>
+                <span><strong>No Autocapture:</strong> PostHog supports auto-recording all clicks, form fields, and DOM interactions — we have this turned off. Only the named events (pageviews + waitlist signup success/failure) are sent.</span>
               </li>
             </ul>
           </section>
@@ -110,10 +129,13 @@ export default function CookiesPage() {
               personal information under CCPA, TDPSA, CPA, and CTDPA.
             </p>
             <p className="text-gray-700 leading-relaxed mb-4">
-              In practice, because we don&rsquo;t use third-party analytics or advertising trackers,
-              there is no sale or sharing to opt out of — but the signal is recorded and acknowledged
-              with a visible notice on our privacy pages, and an <code>X-GPC-Honored: 1</code> response
-              header confirms detection to anyone inspecting the request.
+              When the signal is present, PostHog does not load — no script is fetched, no
+              <code> ph_*</code> cookie is set, and no event is sent. The detection is structurally
+              enforced by our <code>AnalyticsGate</code> component, which checks both the
+              <code> being_gpc</code> cookie (set by middleware when <code>Sec-GPC: 1</code> is
+              received) and the browser&rsquo;s <code>navigator.globalPrivacyControl</code> JS API.
+              An <code>X-GPC-Honored: 1</code> response header confirms detection to anyone
+              inspecting the request.
             </p>
             <p className="text-gray-700 leading-relaxed">
               See the{' '}
@@ -194,10 +216,13 @@ export default function CookiesPage() {
               Your Choices
             </h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              You can clear either cookie at any time via your browser&rsquo;s site-data settings.
+              You can clear any of the cookies at any time via your browser&rsquo;s site-data settings.
               Clearing <code>being_ab_variant</code> just reassigns a variant on your next visit;
               clearing <code>being_gpc</code> is harmless because the cookie reflects the header,
-              not a stored preference.
+              not a stored preference; clearing <code>ph_*</code> opts you out of any PostHog
+              session continuity (you&rsquo;ll appear as a new anonymous visitor next time).
+              Enabling Global Privacy Control in your browser is the simplest way to suppress
+              PostHog entirely.
             </p>
             <p className="text-gray-700 leading-relaxed">
               For questions about server logs, mobile app data storage, or anything else, see our{' '}

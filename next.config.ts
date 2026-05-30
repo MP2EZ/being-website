@@ -16,12 +16,17 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
+      // PostHog hosts its JS at eu-assets.i.posthog.com (EU region)
+      "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://eu-assets.i.posthog.com",
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob:",
+      // PostHog uses pixel-style image beacons as a fallback
+      "img-src 'self' data: blob: https://eu.i.posthog.com",
       "font-src 'self' data:",
-      "connect-src 'self' https://api.notion.com https://challenges.cloudflare.com",
+      // PostHog event ingestion + asset CDN endpoints (EU region only)
+      "connect-src 'self' https://api.notion.com https://challenges.cloudflare.com https://eu.i.posthog.com https://eu-assets.i.posthog.com",
       "frame-src https://challenges.cloudflare.com",
+      // PostHog spawns a web worker for batching even with session replay off
+      "worker-src 'self' blob:",
       "base-uri 'self'",
       "form-action 'self'",
     ].join("; "),
