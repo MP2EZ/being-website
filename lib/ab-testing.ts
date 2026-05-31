@@ -85,39 +85,3 @@ export function getVariantFromRequest(request: NextRequest): Variant | null {
 
   return null;
 }
-
-/**
- * Conversion event types we track
- */
-export type ConversionEvent =
-  | 'waitlist_signup'
-  | 'download_click'
-  | 'cta_click';
-
-/**
- * Tracks a conversion event
- * Conversions are stored in Notion alongside the variant for analysis
- *
- * @param variant - The assigned variant
- * @param event - The conversion event type
- * @param metadata - Optional additional data
- */
-export function trackConversion(
-  variant: Variant,
-  event: ConversionEvent,
-  metadata?: Record<string, string>
-): void {
-  // For now, conversions are tracked by including the variant
-  // in the Notion database entry (see waitlist API)
-  //
-  // Future enhancement: Send to Cloudflare Analytics Engine
-  // await env.ANALYTICS.writeDataPoint({
-  //   blobs: [variant, event],
-  //   doubles: [1], // count
-  //   indexes: [event],
-  // });
-
-  if (process.env.NODE_ENV === 'development') {
-    console.log('[A/B] Conversion tracked:', { variant, event, metadata });
-  }
-}

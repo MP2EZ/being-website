@@ -60,7 +60,10 @@ export function middleware(request: NextRequest) {
       httpOnly: false, // Client reads it to render the GpcNotice
     });
     response.headers.set(GPC_RESPONSE_HEADER, '1');
-  } else {
+  } else if (request.cookies.has(GPC_COOKIE_NAME)) {
+    // Only emit a clearing Set-Cookie when the cookie actually exists —
+    // avoids a needless Set-Cookie (and the cache-busting it causes) on the
+    // common no-GPC path where there's nothing to clear.
     response.cookies.delete(GPC_COOKIE_NAME);
   }
 

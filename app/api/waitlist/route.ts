@@ -8,7 +8,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { getVariant, trackConversion } from '@/lib/ab-testing';
+import { getVariant } from '@/lib/ab-testing';
 
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
 const NOTION_DATABASE_ID = process.env.NOTION_WAITLIST_DB_ID;
@@ -94,11 +94,6 @@ export async function POST(request: NextRequest) {
       const errorData = await response.json();
       console.error('Notion API error:', errorData);
       throw new Error('Failed to add to Notion');
-    }
-
-    // Track conversion for A/B analysis
-    if (variant) {
-      trackConversion(variant, 'waitlist_signup');
     }
 
     return NextResponse.json({ success: true });
