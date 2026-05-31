@@ -1,17 +1,10 @@
 /**
- * PostHog event helpers — type-safe wrappers for the PR #1 event set.
+ * PostHog event helpers.
  *
- * Design notes:
- * - No `posthog-js` import at module scope — these helpers reach the
- *   PostHog instance via `window.__posthog`, which is only set after
- *   PosthogProvider has dynamic-imported the library AND init'd it.
- * - If PostHog never loaded (GPC kill, missing key, SSR), every helper
- *   is a silent no-op. No throws, no console noise.
- * - PR #1 event set: $pageview (PostHog default — fires automatically
- *   on init via capture_pageview: true), trackWaitlistSubmitted,
- *   trackWaitlistFailed.
- * - Future helpers (cta_clicked, crisis_resource_clicked, ab_variant_assigned,
- *   identifyByEmailHash) ship in PR #2+.
+ * No `posthog-js` import at module scope — helpers reach the instance via
+ * `window.__posthog`, only set after PosthogProvider dynamic-imports + inits.
+ * If PostHog never loaded (GPC kill, missing key, SSR), every helper is a
+ * silent no-op.
  */
 
 declare global {

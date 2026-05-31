@@ -131,17 +131,27 @@ describe('middleware — GPC detection', () => {
     expect(response.headers.get('X-GPC-Honored')).toBeNull();
   });
 
-  it('clears the being_gpc cookie when the header is absent', async () => {
+  it('clears the being_gpc cookie when the header is absent but the cookie is present', async () => {
     const { middleware, ab } = await importFresh();
     (ab.getVariantFromRequest as ReturnType<typeof vi.fn>).mockReturnValue('A');
 
-    const response = middleware(buildRequest());
+    // Request carries a stale being_gpc cookie but no Sec-GPC header.
+    const response = middleware(buildRequest({ cookie: 'being_gpc=1' }));
 
     // NextResponse.cookies.delete() emits a Set-Cookie with empty value and
-    // an expired date (the exact attrs are framework-internal — we only
-    // assert the deletion signal: an empty-value cookie was emitted).
+    // an expired date — we assert only the deletion signal (empty value).
     const cookie = response.cookies.get('being_gpc');
     expect(cookie?.value).toBe('');
+  });
+
+  it('does NOT emit a being_gpc Set-Cookie when neither header nor cookie is present', async () => {
+    const { middleware, ab } = await importFresh();
+    (ab.getVariantFromRequest as ReturnType<typeof vi.fn>).mockReturnValue('A');
+
+    // Common path: no Sec-GPC header, no existing cookie → no Set-Cookie at all.
+    const response = middleware(buildRequest());
+
+    expect(response.cookies.get('being_gpc')).toBeUndefined();
   });
 
   it('coexists with A/B variant assignment (both signals set on same response)', async () => {

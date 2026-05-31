@@ -11,7 +11,6 @@
  */
 
 export const POSTHOG_HOST = 'https://eu.i.posthog.com';
-export const POSTHOG_ASSETS_HOST = 'https://eu-assets.i.posthog.com';
 
 export const POSTHOG_KEY: string | undefined = process.env.NEXT_PUBLIC_POSTHOG_KEY;
 
