@@ -32,7 +32,7 @@ export default function DownloadPage() {
             Get early access + a free month trial when we launch. We&rsquo;ll email you the
             moment Being is in the App Store and Google Play.
           </p>
-          <WaitlistSignupForm />
+          <WaitlistSignupForm source="download" />
         </div>
       </section>
 

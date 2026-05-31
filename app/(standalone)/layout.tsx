@@ -9,6 +9,7 @@
  */
 
 import { redirect } from 'next/navigation';
+import { AnalyticsGate } from '@/components/analytics/AnalyticsGate';
 
 export const metadata = {
   title: 'Being - Launching Soon',
@@ -23,5 +24,11 @@ export default function StandaloneLayout({
   if (process.env.NEXT_PUBLIC_SHOW_FULL_SITE === 'true') {
     redirect('/home');
   }
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      {/* PostHog analytics — gated by GPC / config / SSR-safe-default */}
+      <AnalyticsGate />
+    </>
+  );
 }
