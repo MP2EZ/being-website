@@ -1,10 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { NextRequest } from 'next/server';
 
-vi.mock('next/headers', () => ({
-  cookies: vi.fn(),
-}));
-
 describe('lib/gpc', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -62,39 +58,6 @@ describe('lib/gpc', () => {
     it('returns false for a malformed value', async () => {
       const { getGpcFromRequest } = await import('./gpc');
       expect(getGpcFromRequest(buildRequest('true'))).toBe(false);
-    });
-  });
-
-  describe('getGpcFromCookie', () => {
-    async function setCookieValue(value: string | undefined) {
-      const { cookies } = await import('next/headers');
-      (cookies as ReturnType<typeof vi.fn>).mockResolvedValue({
-        get: vi.fn().mockReturnValue(value === undefined ? undefined : { value }),
-      });
-    }
-
-    it("returns true when cookie value is '1'", async () => {
-      await setCookieValue('1');
-      const { getGpcFromCookie } = await import('./gpc');
-      expect(await getGpcFromCookie()).toBe(true);
-    });
-
-    it('returns false when the cookie is absent', async () => {
-      await setCookieValue(undefined);
-      const { getGpcFromCookie } = await import('./gpc');
-      expect(await getGpcFromCookie()).toBe(false);
-    });
-
-    it("returns false when the cookie value is '0'", async () => {
-      await setCookieValue('0');
-      const { getGpcFromCookie } = await import('./gpc');
-      expect(await getGpcFromCookie()).toBe(false);
-    });
-
-    it('returns false for an unexpected cookie value', async () => {
-      await setCookieValue('true');
-      const { getGpcFromCookie } = await import('./gpc');
-      expect(await getGpcFromCookie()).toBe(false);
     });
   });
 });

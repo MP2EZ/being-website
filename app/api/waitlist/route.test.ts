@@ -3,7 +3,6 @@ import { NextRequest } from 'next/server';
 
 vi.mock('@/lib/ab-testing', () => ({
   getVariant: vi.fn(),
-  trackConversion: vi.fn(),
 }));
 
 function buildRequest(body: unknown): NextRequest {
@@ -94,10 +93,9 @@ describe('POST /api/waitlist', () => {
     expect(sent.properties['Signed Up'].date.start).toMatch(
       /^\d{4}-\d{2}-\d{2}T/,
     );
-    expect(ab.trackConversion).not.toHaveBeenCalled();
   });
 
-  it('posts to Notion with Variant and tracks conversion when variant assigned', async () => {
+  it('posts to Notion with Variant when a variant is assigned', async () => {
     const { route, ab } = await importRouteFresh();
     (ab.getVariant as ReturnType<typeof vi.fn>).mockResolvedValue('A');
     const fetchSpy = vi
@@ -111,7 +109,6 @@ describe('POST /api/waitlist', () => {
       (fetchSpy.mock.calls[0]![1] as RequestInit).body as string,
     );
     expect(sent.properties.Variant).toEqual({ select: { name: 'A' } });
-    expect(ab.trackConversion).toHaveBeenCalledWith('A', 'waitlist_signup');
   });
 
   it('returns 500 when Notion API responds non-ok', async () => {
@@ -125,7 +122,6 @@ describe('POST /api/waitlist', () => {
 
     expect(res.status).toBe(500);
     expect(await res.json()).toEqual({ error: 'Failed to join waitlist' });
-    expect(ab.trackConversion).not.toHaveBeenCalled();
   });
 
   it("returns 400 'Invalid JSON' when request body is malformed", async () => {

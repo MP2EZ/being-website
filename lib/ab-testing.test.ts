@@ -183,30 +183,4 @@ describe('lib/ab-testing', () => {
       expect(getVariantFromRequest(buildRequest('being_ab_variant=C'))).toBeNull();
     });
   });
-
-  describe('trackConversion', () => {
-    it('logs in development mode', async () => {
-      vi.stubEnv('NODE_ENV', 'development');
-      const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-      const { trackConversion } = await import('./ab-testing');
-
-      trackConversion('A', 'waitlist_signup', { source: 'homepage' });
-
-      expect(logSpy).toHaveBeenCalledWith('[A/B] Conversion tracked:', {
-        variant: 'A',
-        event: 'waitlist_signup',
-        metadata: { source: 'homepage' },
-      });
-    });
-
-    it('does not log in production mode', async () => {
-      vi.stubEnv('NODE_ENV', 'production');
-      const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-      const { trackConversion } = await import('./ab-testing');
-
-      trackConversion('B', 'download_click');
-
-      expect(logSpy).not.toHaveBeenCalled();
-    });
-  });
 });
