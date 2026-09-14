@@ -52,10 +52,17 @@ const nextConfig: NextConfig = {
     },
   },
   async headers() {
+    // Preview builds its legal pages from being `development`, text that may
+    // not be in effect yet, so keep it out of search indexes (INFRA-363).
+    // Strict equality on purpose: noindex on anything but an explicit preview
+    // build would drop being.fyi from search results.
+    const isPreviewDeploy = process.env.NEXT_PUBLIC_DEPLOY_TARGET === "preview";
     return [
       {
         source: "/:path*",
-        headers: securityHeaders,
+        headers: isPreviewDeploy
+          ? [...securityHeaders, { key: "X-Robots-Tag", value: "noindex, nofollow" }]
+          : securityHeaders,
       },
     ];
   },

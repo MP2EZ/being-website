@@ -40,12 +40,11 @@ npm run build
 
 ### Deployment
 
-The site is automatically deployed to Cloudflare Pages when pushing to `main` branch.
+`.github/workflows/deploy.yml` builds with OpenNext and deploys to Cloudflare Workers on push to `main` (https://being.fyi) or `preview`. Run it by hand with `gh workflow run deploy.yml --ref main`.
 
-Manual deployment:
-```bash
-npx wrangler pages deploy .vercel/output/static --project-name=websitev2
-```
+### Legal content
+
+`content/legal` is a **gitignored, local-dev-only symlink** to being's `development` worktree (`../../being/development/docs/legal`), so local preview diverges from production by construction. Deploys never use it: `.github/actions/checkout-legal` copies `docs/legal` from `mp2ez/being` at build time, from `main` for production and `development` for preview. mp2ez/being redeploys the site when `docs/legal` changes.
 
 ## 🏗️ Project Structure
 
@@ -63,8 +62,6 @@ npx wrangler pages deploy .vercel/output/static --project-name=websitev2
     /waitlist             # Waitlist signup endpoint
   /accessibility          # Accessibility statement
   /crisis                 # Crisis resources
-  /disclaimers            # Legal disclaimers
-  /hipaa                  # HIPAA compliance info
 
 /components               # Reusable React components
   /navigation             # Navigation components

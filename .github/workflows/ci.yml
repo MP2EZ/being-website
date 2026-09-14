@@ -13,21 +13,11 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Checkout legal content from being repo
-        uses: actions/checkout@v6
+        uses: ./.github/actions/checkout-legal
         with:
-          repository: mp2ez/being
-          ref: development
+          # The legal text this PR's target branch deploys.
+          target: ${{ github.base_ref == 'main' && 'production' || 'preview' }}
           token: ${{ secrets.GH_PACKAGES_TOKEN }}
-          path: .tmp-being
-          sparse-checkout: |
-            docs/legal
-          sparse-checkout-cone-mode: false
-
-      - name: Copy legal files to content directory
-        run: |
-          mkdir -p content/legal
-          cp -r .tmp-being/docs/legal/* content/legal/
-          rm -rf .tmp-being
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -62,21 +52,11 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Checkout legal content from being repo
-        uses: actions/checkout@v6
+        uses: ./.github/actions/checkout-legal
         with:
-          repository: mp2ez/being
-          ref: development
+          # The legal text this PR's target branch deploys.
+          target: ${{ github.base_ref == 'main' && 'production' || 'preview' }}
           token: ${{ secrets.GH_PACKAGES_TOKEN }}
-          path: .tmp-being
-          sparse-checkout: |
-            docs/legal
-          sparse-checkout-cone-mode: false
-
-      - name: Copy legal files to content directory
-        run: |
-          mkdir -p content/legal
-          cp -r .tmp-being/docs/legal/* content/legal/
-          rm -rf .tmp-being
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
