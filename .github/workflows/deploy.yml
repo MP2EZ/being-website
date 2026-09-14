@@ -113,14 +113,24 @@ jobs:
             exit 1
           fi
           # noindex must be on preview and must never reach production, where
-          # it would drop being.fyi from search results.
-          ROBOTS=$(curl -sI "$URL/privacy$CB" | grep -i '^x-robots-tag:' || true)
+          # it would drop being.fyi from search results. This is the only check
+          # that tells the new version from the old one, and a deploy can take
+          # longer than the sleep above to reach the edge. So sample for up to
+          # 60s: preview passes on the first noindex, production fails on the
+          # first robots header.
+          for i in $(seq 1 12); do
+            ROBOTS=$(curl -sI "$URL/privacy?cb=$(date +%s)-$i" | grep -i '^x-robots-tag:' || true)
+            if [ "$TARGET" = "preview" ] && echo "$ROBOTS" | grep -qi noindex; then
+              break
+            fi
+            if [ "$TARGET" = "production" ] && [ -n "$ROBOTS" ]; then
+              echo "FAIL: production $URL/privacy sends $ROBOTS"
+              exit 1
+            fi
+            if [ "$i" -lt 12 ]; then sleep 5; fi
+          done
           if [ "$TARGET" = "preview" ] && ! echo "$ROBOTS" | grep -qi noindex; then
-            echo "FAIL: $URL/privacy missing X-Robots-Tag: noindex on preview"
-            exit 1
-          fi
-          if [ "$TARGET" = "production" ] && [ -n "$ROBOTS" ]; then
-            echo "FAIL: production $URL/privacy sends $ROBOTS"
+            echo "FAIL: $URL/privacy missing X-Robots-Tag: noindex on preview after 60s"
             exit 1
           fi
           echo "Post-deploy smoke passed for $URL"
