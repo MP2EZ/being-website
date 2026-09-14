@@ -5,33 +5,51 @@ on:
     branches:
       - main
       - preview
+  # Also dispatched by mp2ez/being's legal-site-redeploy.yml when docs/legal
+  # changes: being main -> this repo's main, being development -> preview.
   workflow_dispatch:
+    inputs:
+      legal_ref:
+        description: >-
+          BREAK-GLASS ONLY. Build legal pages from this mp2ez/being ref (e.g. the
+          hotfix/* branch carrying a correction) instead of the target's default.
+          Production then no longer matches being main, and being's
+          legal-site-freshness check stays red until the fix lands there.
+        required: false
+        default: ''
+
+# One deploy per environment at a time. A legal-content dispatch can arrive
+# while a code push is deploying: queue instead of racing.
+concurrency:
+  group: deploy-${{ github.ref_name }}
+  cancel-in-progress: false
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     name: Deploy Website
+    env:
+      # Resolved once; drives the legal ref, the wrangler env and the smoke URL.
+      # A dispatch on any other ref used to deploy to production and then smoke
+      # the preview URL.
+      TARGET: ${{ github.ref_name == 'main' && 'production' || github.ref_name == 'preview' && 'preview' || '' }}
 
     steps:
+      - name: Refuse refs other than main and preview
+        if: env.TARGET == ''
+        run: |
+          echo "::error::deploy.yml deploys main (production) or preview only, not '$GITHUB_REF_NAME'"
+          exit 1
+
       - name: Checkout code
         uses: actions/checkout@v6
 
       - name: Checkout legal content from being repo
-        uses: actions/checkout@v6
+        uses: ./.github/actions/checkout-legal
         with:
-          repository: mp2ez/being
-          ref: development
+          target: ${{ env.TARGET }}
+          ref-override: ${{ inputs.legal_ref }}
           token: ${{ secrets.GH_PACKAGES_TOKEN }}
-          path: .tmp-being
-          sparse-checkout: |
-            docs/legal
-          sparse-checkout-cone-mode: false
-
-      - name: Copy legal files to content directory
-        run: |
-          mkdir -p content/legal
-          cp -r .tmp-being/docs/legal/* content/legal/
-          rm -rf .tmp-being
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -58,17 +76,20 @@ jobs:
           # or empty, AnalyticsGate renders nothing — graceful degradation.
           # GPC kill happens client-side regardless. See lib/posthog/config.ts.
           NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+          # 'preview' turns on X-Robots-Tag: noindex and the legal-page preview
+          # notice (preview serves being development's legal text).
+          NEXT_PUBLIC_DEPLOY_TARGET: ${{ env.TARGET }}
 
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy ${{ github.ref_name == 'preview' && '--env preview' || '' }}
+          command: deploy ${{ env.TARGET == 'preview' && '--env preview' || '' }}
 
       - name: Post-deploy smoke against live URL
         run: |
-          URL="${{ github.ref_name == 'main' && 'https://being.fyi' || 'https://being-website-preview.palouselabs.workers.dev' }}"
+          URL="${{ env.TARGET == 'production' && 'https://being.fyi' || 'https://being-website-preview.palouselabs.workers.dev' }}"
           echo "Smoke testing $URL ..."
           # Brief wait for Cloudflare edge propagation after deploy
           sleep 15
@@ -89,6 +110,17 @@ jobs:
           # headers pipeline is intact end-to-end through Cloudflare)
           if ! curl -sI "$URL/privacy" | grep -qi "strict-transport-security"; then
             echo "FAIL: $URL/privacy missing Strict-Transport-Security header"
+            exit 1
+          fi
+          # noindex must be on preview and must never reach production, where
+          # it would drop being.fyi from search results.
+          ROBOTS=$(curl -sI "$URL/privacy$CB" | grep -i '^x-robots-tag:' || true)
+          if [ "$TARGET" = "preview" ] && ! echo "$ROBOTS" | grep -qi noindex; then
+            echo "FAIL: $URL/privacy missing X-Robots-Tag: noindex on preview"
+            exit 1
+          fi
+          if [ "$TARGET" = "production" ] && [ -n "$ROBOTS" ]; then
+            echo "FAIL: production $URL/privacy sends $ROBOTS"
             exit 1
           fi
           echo "Post-deploy smoke passed for $URL"

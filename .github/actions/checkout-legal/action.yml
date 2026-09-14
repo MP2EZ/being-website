@@ -1,0 +1,77 @@
+name: Checkout legal content
+description: Copy docs/legal from mp2ez/being into content/legal for a deploy target.
+
+# The one place that decides which being ref the legal pages are built from.
+# deploy.yml and both ci.yml jobs call it, so PR CI validates the same legal
+# text its target ships and the pins cannot drift apart. (INFRA-363)
+#
+# production -> being `main`. Production builds legal copy from `main` so the
+#   published policy always matches the shipped app, which bundles docs/legal
+#   from `main`. Building from `development` is the one configuration where
+#   being.fyi can describe LESS collection or sharing than the released app
+#   performs, the direction FTC Act §5 punishes. The accepted cost: a correction
+#   to live legal text must reach `main` via hotfix/* before the site changes.
+#   Never silently redeploy production from a non-`main` ref; the only
+#   sanctioned exception is deploy.yml's break-glass `legal_ref` input.
+#
+# preview -> being `development`, so upcoming disclosures can be reviewed before
+#   a release. That text may not be in effect yet, which is why preview builds
+#   send `X-Robots-Tag: noindex` and render a notice on every legal page.
+#
+# mp2ez/being's legal-site-redeploy.yml dispatches deploy.yml when docs/legal
+# changes on either branch, and its legal-site-freshness.yml checks daily that
+# being.fyi matches `main`.
+
+inputs:
+  target:
+    description: "'production' or 'preview'"
+    required: true
+  ref-override:
+    description: Break-glass being ref. Empty uses the target's ref.
+    required: false
+    default: ''
+  token:
+    description: Token with read access to mp2ez/being
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Resolve being ref
+      id: ref
+      shell: bash
+      env:
+        TARGET: ${{ inputs.target }}
+        OVERRIDE: ${{ inputs.ref-override }}
+      run: |
+        case "$TARGET" in
+          production) ref=main ;;
+          preview) ref=development ;;
+          *) echo "::error::checkout-legal: unknown target '$TARGET'"; exit 1 ;;
+        esac
+        if [ -n "$OVERRIDE" ]; then
+          echo "::warning::BREAK-GLASS: $TARGET legal content built from mp2ez/being@$OVERRIDE, not $ref"
+          ref="$OVERRIDE"
+        fi
+        echo "ref=$ref" >> "$GITHUB_OUTPUT"
+
+    - name: Sparse-checkout docs/legal
+      uses: actions/checkout@v6
+      with:
+        repository: mp2ez/being
+        ref: ${{ steps.ref.outputs.ref }}
+        token: ${{ inputs.token }}
+        path: .tmp-being
+        sparse-checkout: |
+          docs/legal
+        sparse-checkout-cone-mode: false
+
+    - name: Copy into content/legal
+      shell: bash
+      env:
+        REF: ${{ steps.ref.outputs.ref }}
+      run: |
+        echo "Legal content: mp2ez/being@$REF ($(git -C .tmp-being rev-parse --short HEAD))" | tee -a "$GITHUB_STEP_SUMMARY"
+        mkdir -p content/legal
+        cp -r .tmp-being/docs/legal/* content/legal/
+        rm -rf .tmp-being
