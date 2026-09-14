@@ -28,6 +28,35 @@ function renderMarkdown(content: string): string {
 }
 
 /**
+ * Preview builds legal pages from being `development` (INFRA-363), so the text
+ * may describe changes that are not yet in effect. Say so on the page itself —
+ * the noindex header keeps search engines away, not people with the URL.
+ */
+function PreviewNotice() {
+  return (
+    <aside
+      role="note"
+      aria-label="Preview environment notice"
+      className="max-w-4xl mx-auto px-6 pt-8"
+    >
+      <div className="border-l-4 border-warning bg-warning-bg p-4 rounded-r-medium">
+        <p className="text-sm text-gray-700 leading-relaxed">
+          <strong className="text-brand-midnight">
+            Preview site — not the published version.
+          </strong>{' '}
+          This page may describe changes that are not yet in effect. The version
+          currently in effect is at{' '}
+          <a href="https://being.fyi" className="underline text-brand-midnight">
+            being.fyi
+          </a>
+          .
+        </p>
+      </div>
+    </aside>
+  );
+}
+
+/**
  * Renders a legal document from markdown with consistent styling.
  * Uses design system tokens for colors and spacing.
  * Server component using marked for edge runtime compatibility.
@@ -40,6 +69,7 @@ export function LegalPage({ content, banner }: LegalPageProps) {
 
   return (
     <div className="bg-brand-off-white min-h-screen">
+      {process.env.NEXT_PUBLIC_DEPLOY_TARGET === 'preview' && <PreviewNotice />}
       {banner}
       <article
         className="legal-content max-w-4xl mx-auto px-6 py-16"
